@@ -158,11 +158,11 @@
           <sc-for list="{{ contrasts }}" as="c" hint-placeholder-count="5">
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
             <div style="background: #f5f5f7; border-radius: 16px; padding: 22px 24px;">
-              <div style="font-size: 13px; font-weight: 600; color: #86868b; margin-bottom: 8px;">一般做法</div>
+              <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #86868b; margin-bottom: 8px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#a1a1a6" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>一般做法</div>
               <p style="font-size: 16px; line-height: 1.6; color: #6e6e73;">{{ c.common }}</p>
             </div>
             <div style="background: rgba(0,113,227,0.06); border: 1px solid rgba(0,113,227,0.14); border-radius: 16px; padding: 22px 24px;">
-              <div style="font-size: 13px; font-weight: 600; color: {{ accent }}; margin-bottom: 8px;">我的做法</div>
+              <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #0071e3; margin-bottom: 8px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>我的做法</div>
               <p style="font-size: 16px; line-height: 1.65; color: #1d1d1f;">{{ c.mine }}</p>
             </div>
           </div>
@@ -185,6 +185,74 @@
       <div style="border-top: 1px solid #ececef; padding-top: 44px;">
         <h2 style="font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 18px; line-height: 1.25;">這是什麼</h2>
         <p style="font-size: 19px; line-height: 1.75; color: #1d1d1f; margin-bottom: 22px;">團隊在跑專案時,那幾份 PM 文件 —— 需求確認、企劃書、執行細則、流程與分派、技術規格 —— 常常是散的,或是事後才補。我做了一套內部的 AI Agent 工作台:把一個專案的零散素材(會議記錄、進度回報、既有文件)丟進去,讓 AI 反推、整理成這五份結構化的文件。聽起來就是「叫 AI 生成」,但難的、也是我最在意的,不在生成本身。</p>
+
+        <!-- governance data-flow diagram -->
+        <div role="img" aria-label="資料流示意:專案素材進入系統,交給 AI 推理產出草稿,草稿必須經過人工確認這道最後一關,才寫進系統資料庫;需要對外查資料時只透過去識別化 Gateway 送出查詢條件。" style="background: #fff; border: 1px solid #ececef; border-radius: 22px; padding: 36px 30px 28px; margin: 30px 0 10px;">
+          <p style="font-size: 13px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: #86868b; margin-bottom: 4px;">這套系統的資料流</p>
+          <h3 style="font-size: 23px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 26px;">每一步都受控、可稽核</h3>
+
+          <div style="display: flex; gap: 18px;">
+            <div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0;">
+              <div style="width: 46px; height: 46px; border-radius: 50%; background: #f5f5f7; display: flex; align-items: center; justify-content: center;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></div>
+              <div style="width: 2px; flex: 1; background: #e6e6ea; margin: 6px 0;"></div>
+            </div>
+            <div style="padding-bottom: 26px;">
+              <h4 style="font-size: 18px; font-weight: 600; margin-bottom: 4px;">專案素材進入系統</h4>
+              <p style="font-size: 16px; line-height: 1.55; color: #6e6e73;">會議記錄、進度回報、既有文件 —— 留在自家資料庫裡。</p>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 18px;">
+            <div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0;">
+              <div style="width: 46px; height: 46px; border-radius: 50%; background: #f5f5f7; display: flex; align-items: center; justify-content: center;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4l1.7 4.6L18 10l-4.3 1.4L12 16l-1.7-4.6L6 10l4.3-1.4z"/></svg></div>
+              <div style="width: 2px; flex: 1; background: #e6e6ea; margin: 6px 0;"></div>
+            </div>
+            <div style="padding-bottom: 26px;">
+              <h4 style="font-size: 18px; font-weight: 600; margin-bottom: 4px;">AI 只做推理與整理</h4>
+              <p style="font-size: 16px; line-height: 1.55; color: #6e6e73;">分析、生成文件,但<strong style="color:#1d1d1f;font-weight:600;">不保管資料、不當資料庫</strong>。</p>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 18px;">
+            <div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0;">
+              <div style="width: 46px; height: 46px; border-radius: 50%; background: #f5f5f7; display: flex; align-items: center; justify-content: center;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L18.5 9.5l-4-4L4 16z"/><path d="M13.5 6l4 4"/></svg></div>
+              <div style="width: 2px; flex: 1; background: #e6e6ea; margin: 6px 0;"></div>
+            </div>
+            <div style="padding-bottom: 26px;">
+              <h4 style="font-size: 18px; font-weight: 600; margin-bottom: 4px;">產出「草稿」</h4>
+              <p style="font-size: 16px; line-height: 1.55; color: #6e6e73;">一律標「未經人工確認」,並附上待確認事項。</p>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 18px;">
+            <div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0;">
+              <div style="width: 46px; height: 46px; border-radius: 50%; background: #0071e3; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(0,113,227,0.3);"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+              <div style="width: 2px; flex: 1; background: #e6e6ea; margin: 6px 0;"></div>
+            </div>
+            <div style="padding-bottom: 26px;">
+              <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;"><h4 style="font-size: 18px; font-weight: 600;">人工確認</h4><span style="font-size: 12px; font-weight: 600; color: #0071e3; background: rgba(0,113,227,0.1); padding: 3px 10px; border-radius: 980px;">最後一關</span></div>
+              <p style="font-size: 16px; line-height: 1.55; color: #6e6e73;">AI 只能「提議」,人看過、確認了,它才算數。</p>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 18px;">
+            <div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0;">
+              <div style="width: 46px; height: 46px; border-radius: 50%; background: #f5f5f7; display: flex; align-items: center; justify-content: center;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/><path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg></div>
+            </div>
+            <div>
+              <h4 style="font-size: 18px; font-weight: 600; margin-bottom: 4px;">寫入系統資料庫(主庫)</h4>
+              <p style="font-size: 16px; line-height: 1.55; color: #6e6e73;">全程留痕:誰確認、根據什麼、資料到哪,都查得到。</p>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 13px; align-items: flex-start; background: rgba(0,113,227,0.05); border: 1px dashed rgba(0,113,227,0.35); border-radius: 14px; padding: 16px 18px; margin-top: 22px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px;" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M7 10V7a5 5 0 0 1 10 0v3"/></svg>
+            <div>
+              <div style="font-size: 15px; font-weight: 600; color: #1d1d1f; margin-bottom: 2px;">需要對外查資料時</div>
+              <p style="font-size: 15px; line-height: 1.55; color: #6e6e73;">只透過去識別化 Gateway 送出「查詢條件」—— 公司內部原文、客戶、成本、人員資料一律不出門。</p>
+            </div>
+          </div>
+        </div>
 
         <h2 style="font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 44px 0 18px; line-height: 1.25;">一般人會怎麼做 —— 以及我為什麼不那樣做</h2>
         <p style="font-size: 19px; line-height: 1.75; color: #1d1d1f; margin-bottom: 22px;">最快的路,是把公司的專案資料整包丟給一個雲端 AI,叫它產文件,拿到能用的就好。但這裡有兩件我不能接受的事:第一,公司內部資料就這樣流出去了;第二,我沒辦法回答「這份文件到底是根據什麼生出來的、可不可信」。所以我沒有把它做成一個「呼叫 AI 的按鈕」,而是重新設計成一條有治理的資料流。</p>
