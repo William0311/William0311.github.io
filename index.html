@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #ffffff; }
+  ::selection { background: #b3d4fc; }
+  @keyframes floatUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  html { scroll-behavior: smooth; }
+</style>
+</helmet>
+
+<div style="font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Noto Sans TC', sans-serif; color: #1d1d1f; background: #fff; -webkit-font-smoothing: antialiased; letter-spacing: -0.01em;">
+
+  <!-- NAV (tabs + persistent positioning line) -->
+  <nav style="position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.78); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(0,0,0,0.08);">
+    <div style="width: 100%; max-width: 1024px; margin: 0 auto; padding: 12px 22px; display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap;">
+      <div onClick="{{ goWork }}" style="cursor: pointer;">
+        <div style="font-size: 18px; font-weight: 600; color: #1d1d1f; letter-spacing: 0;">陳暐霖 · Wei-Lin Chen</div>
+        <div style="font-size: 12px; color: #86868b; margin-top: 1px;">Junior 後端 / 自動化工程師 · Python · API · AI Agent</div>
+      </div>
+      <div style="display: flex; gap: 26px; align-items: center;">
+        <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+          <span onClick="{{ t.onPick }}" style="font-size: 15px; cursor: pointer; padding: 4px 1px; color: {{ t.color }}; font-weight: {{ t.weight }}; border-bottom: 2px solid {{ t.border }};">{{ t.label }}</span>
+        </sc-for>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===================== TAB: WORK (default) ===================== -->
+  <sc-if value="{{ isWork }}" hint-placeholder-val="{{ true }}">
+  <div>
+    <!-- WORK GRID -->
+    <section style="padding: 96px 22px 70px; background: #fbfbfd;">
+      <div style="max-width: 1024px; margin: 0 auto;">
+        <h2 style="font-size: 56px; font-weight: 700; letter-spacing: -0.025em; text-align: center; margin-bottom: 16px;">Selected Work</h2>
+        <p style="font-size: 21px; color: #6e6e73; text-align: center; margin-bottom: 64px;">精選專案</p>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px;">
+          <sc-for list="{{ projects }}" as="p" hint-placeholder-count="2">
+            <div onClick="{{ p.onOpen }}" style="background: #fff; border: 1px solid #ececef; border-radius: 22px; padding: 40px; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease;" style-hover="transform: translateY(-6px); box-shadow: 0 18px 40px rgba(0,0,0,0.08);">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px;">
+                <span style="font-size: 13px; font-weight: 600; color: {{ accent }}; background: rgba(0,113,227,0.08); padding: 5px 12px; border-radius: 980px;">{{ p.tag }}</span>
+                <span style="font-size: 14px; color: #86868b;">{{ p.meta }}</span>
+              </div>
+              <h3 style="font-size: 28px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 14px;">{{ p.name }}</h3>
+              <p style="font-size: 17px; line-height: 1.6; color: #515154;">{{ p.desc }}</p>
+              <p style="font-size: 15px; color: {{ accent }}; margin-top: 18px;">{{ p.cta }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section style="padding: 80px 22px 120px; background: #fff;">
+      <div style="max-width: 1024px; margin: 0 auto;">
+        <h2 style="font-size: 56px; font-weight: 700; letter-spacing: -0.025em; text-align: center; margin-bottom: 16px;">Skills</h2>
+        <p style="font-size: 21px; color: #6e6e73; text-align: center; margin-bottom: 64px;">能力與技術棧</p>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+          <sc-for list="{{ skillGroups }}" as="g" hint-placeholder-count="6">
+            <div style="background: #f5f5f7; border-radius: 20px; padding: 34px 30px; min-height: 190px;">
+              <h3 style="font-size: 24px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 16px;">{{ g.area }}</h3>
+              <p style="font-size: 17px; line-height: 1.6; color: #515154;">{{ g.items }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ===================== TAB: MARS ===================== -->
+  <sc-if value="{{ isMars }}" hint-placeholder-val="{{ true }}">
+  <div>
+    <!-- MARS FEATURED -->
+    <section style="padding: 96px 22px 110px; background: #000; color: #f5f5f7; text-align: center;">
+      <div style="max-width: 980px; margin: 0 auto;">
+        <p style="font-size: 21px; font-weight: 600; color: #f5f5f7; margin-bottom: 8px;">畢業專題</p>
+        <h2 style="font-size: 88px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; margin-bottom: 12px; background: linear-gradient(90deg, #fff, #a0c4ff); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Mars</h2>
+        <p style="font-size: 28px; font-weight: 500; color: #f5f5f7; margin-bottom: 22px;">專案管理系統</p>
+        <p style="font-size: 21px; line-height: 1.5; color: #a1a1a6; max-width: 660px; margin: 0 auto 56px;">整合任務看板、甘特圖與自動化通知的全端專案管理平台。後端以 FastAPI 打造,並用 AI Agent 自動拆解需求、分派任務與生成進度摘要。</p>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; max-width: 760px; margin: 0 auto;">
+          <div><div style="font-size: 52px; font-weight: 700; letter-spacing: -0.03em; background: linear-gradient(90deg,#fff,#a0c4ff); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">8+</div><div style="font-size: 15px; color: #a1a1a6; margin-top: 6px;">功能模組</div></div>
+          <div><div style="font-size: 52px; font-weight: 700; letter-spacing: -0.03em; background: linear-gradient(90deg,#fff,#a0c4ff); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Agent</div><div style="font-size: 15px; color: #a1a1a6; margin-top: 6px;">自動分派</div></div>
+          <div><div style="font-size: 52px; font-weight: 700; letter-spacing: -0.03em; background: linear-gradient(90deg,#fff,#a0c4ff); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">REST</div><div style="font-size: 15px; color: #a1a1a6; margin-top: 6px;">API 架構</div></div>
+          <div><div style="font-size: 52px; font-weight: 700; letter-spacing: -0.03em; background: linear-gradient(90deg,#fff,#a0c4ff); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">100%</div><div style="font-size: 15px; color: #a1a1a6; margin-top: 6px;">自主開發</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH STACK STRIP -->
+    <section style="padding: 70px 22px; background: #fbfbfd; text-align: center; border-bottom: 1px solid #f0f0f2;">
+      <p style="font-size: 14px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #86868b; margin-bottom: 26px;">Mars 技術組成</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; max-width: 720px; margin: 0 auto;">
+        <sc-for list="{{ marsStack }}" as="t" hint-placeholder-count="6">
+          <span style="font-size: 16px; font-weight: 500; color: #1d1d1f; background: #fff; border: 1px solid #e2e2e6; padding: 9px 18px; border-radius: 980px;">{{ t }}</span>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- MARS FLAGSHIP FEATURE (進度回報 × AI 驗收分析) -->
+    <section style="padding: 120px 22px; background: #fff;">
+      <div style="max-width: 1024px; margin: 0 auto;">
+        <p style="font-size: 14px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #86868b; text-align: center; margin-bottom: 18px;">我在 Mars 做的一次嘗試</p>
+        <h2 style="font-size: 48px; font-weight: 700; letter-spacing: -0.025em; text-align: center; line-height: 1.15; margin-bottom: 20px; max-width: 820px; margin-left: auto; margin-right: auto;">把手填工時,換成上傳一份 MD 讓 AI 分類驗收</h2>
+        <p style="font-size: 21px; line-height: 1.6; color: #6e6e73; text-align: center; max-width: 740px; margin: 0 auto 64px;">我注意到手動回報工時、還要自己一個個選任務、對驗收標準,實在太麻煩 —— 步驟越多,大家越懶得填。於是我試著把流程反過來:上傳一份 Markdown,讓 AI 去分類、整理、對驗收。</p>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;">
+          <div style="background: #f5f5f7; border-radius: 20px; padding: 36px 30px;">
+            <div style="font-size: 13px; font-weight: 600; letter-spacing: 0.04em; color: #ff6b3d; margin-bottom: 16px;">我發現的麻煩</div>
+            <h3 style="font-size: 23px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 12px;">回報太麻煩,大家就不想填</h3>
+            <p style="font-size: 17px; line-height: 1.65; color: #515154;">手動填工時與進度,還得自己選對應的任務、逐條對驗收標準。步驟一多,回報意願就低,資料也跟著不準。</p>
+          </div>
+          <div style="background: #f5f5f7; border-radius: 20px; padding: 36px 30px;">
+            <div style="font-size: 13px; font-weight: 600; letter-spacing: 0.04em; color: {{ accent }}; margin-bottom: 16px;">我試的做法</div>
+            <h3 style="font-size: 23px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 12px;">把流程反過來,讓 AI 接第一步</h3>
+            <p style="font-size: 17px; line-height: 1.65; color: #515154;">不再要人先分類。改成上傳一份 Markdown 進度,讓 AI 自動判斷它屬於哪個任務、整理成條目、再對上驗收標準。</p>
+          </div>
+          <div style="background: #f5f5f7; border-radius: 20px; padding: 36px 30px;">
+            <div style="font-size: 13px; font-weight: 600; letter-spacing: 0.04em; color: #1d9e5b; margin-bottom: 16px;">我學到的</div>
+            <h3 style="font-size: 23px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 12px;">雜事給 AI,判斷留給人</h3>
+            <p style="font-size: 17px; line-height: 1.65; color: #515154;">AI 很適合接「分類與對照」這種瑣碎工;但「驗收到底算不算達成」這種要負責的判斷,我選擇留給人來拍板。</p>
+          </div>
+        </div>
+        <p style="font-size: 15px; color: #86868b; text-align: center; margin-top: 36px;">試著導入的技術 · 用 AI(Gemini)把 Markdown 分類對齊 · 後端 FastAPI 串接 · 最後一關保留人工確認</p>
+        <p style="text-align: center; margin-top: 28px;"><span onClick="{{ goFeatures }}" style="display: inline-block; font-size: 16px; color: {{ accent }}; cursor: pointer;">看這個功能的完整開發案例 ›</span></p>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ===================== TAB: AI FEATURES ===================== -->
+  <sc-if value="{{ isFeatures }}" hint-placeholder-val="{{ true }}">
+  <div>
+    <!-- intro -->
+    <section style="padding: 96px 22px 20px; background: #fff;">
+      <div style="max-width: 820px; margin: 0 auto; text-align: center;">
+        <h2 style="font-size: 56px; font-weight: 700; letter-spacing: -0.025em; margin-bottom: 16px;">AI 功能開發與應用</h2>
+        <p style="font-size: 21px; line-height: 1.6; color: #6e6e73; max-width: 680px; margin: 0 auto;">我把 AI 導入真實工作流程的幾個嘗試。重點不是「AI 多厲害」,而是我發現了什麼問題、試著導入什麼、又學到了什麼。</p>
+      </div>
+    </section>
+
+    <!-- feature case study: 進度回報 × AI 整合驗收分析 -->
+    <article style="max-width: 760px; margin: 0 auto; padding: 56px 22px 40px;">
+      <div style="display: flex; gap: 14px; align-items: center; margin-bottom: 18px;">
+        <span style="font-size: 13px; font-weight: 600; color: {{ accent }}; background: rgba(0,113,227,0.08); padding: 5px 12px; border-radius: 980px;">Mars · 旗艦功能</span>
+        <span style="font-size: 14px; color: #86868b;">AI 整合 · 流程改造 · 2026</span>
+      </div>
+      <h1 style="font-size: 46px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 20px;">進度回報 × AI 整合驗收分析</h1>
+      <p style="font-size: 22px; line-height: 1.55; color: #515154; font-weight: 400;">我把「手填工時、自己選任務、逐條對驗收」這套大家都懶得做的流程,換成上傳一份 Markdown、讓 AI 分類對齊,最後由人確認。</p>
+    </article>
+
+    <div style="max-width: 760px; margin: 0 auto; padding: 0 22px 110px;">
+      <div style="border-top: 1px solid #ececef; padding-top: 44px;">
+        <h2 style="font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 18px; line-height: 1.25;">背景</h2>
+        <p style="font-size: 19px; line-height: 1.75; color: #1d1d1f; margin-bottom: 22px;">Mars 是我做的全端專案管理系統。團隊每個人要回報自己花了多少工時、做了哪些進度,主管則要追蹤每個任務做到哪、當初訂的驗收標準達成了沒。回報這件事,是整個系統能不能反映真實狀況的源頭。</p>
+
+        <h2 style="font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 44px 0 18px; line-height: 1.25;">我發現的問題</h2>
+        <p style="font-size: 19px; line-height: 1.75; color: #1d1d1f; margin-bottom: 22px;">手動回報的摩擦太大了。要填工時、要自己從一長串任務裡挑出對應的那個、還要逐條去對驗收標準。步驟一多,大家就越來越懶得填 —— 而一旦回報變稀疏,後面所有的進度與驗收資料就跟著失真。問題不在「人不認真」,在「這個流程本身太費力」。</p>
+
+        <h2 style="font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 44px 0 18px; line-height: 1.25;">我給自己的限制</h2>
+        <p style="font-size: 19px; line-height: 1.75; color: #1d1d1f; margin-bottom: 22px;">在動手前,我先框住三條不能破的線:導入 AI 不能讓資料變得「不可信」;不要為了塞這個功能而硬加一堆資料表去攪亂既有結構;而且 AI 絕對不能直接改掉「驗收是否達成」的結果 —— 那是一個要負責任的判斷,不是一個可以猜的分類。</p>
+
+        <h2 style="font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 44px 0 18px; line-height: 1.25;">我試的做法</h2>
+        <p style="font-size: 19px; line-height: 1.75; color: #1d1d1f; margin-bottom: 22px;">我把整個流程反過來。原本是「人先分類、再填」,改成:上傳一份 Markdown 進度 → AI 自動判斷它屬於哪個任務、整理成一條條進度、再對上該任務的驗收標準 → 最後由本人確認、主管採納,系統才真的寫進去。人從「動手做分類」變成「審一份已經整理好的草稿」。</p>
+
+        <h2 style="font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 44px 0 18px; line-height: 1.25;">幾個關鍵決定</h2>
+        <p style="font-size: 19px; line-height: 1.75; color: #1d1d1f; margin-bottom: 14px;"><strong>人是最後一關。</strong>AI 只負責「提議」,在有人按下確認之前,什麼都不會寫進真正的任務資料。這道人工關卡是設計,不是補丁。</p>
+        <p style="font-size: 19px; line-height: 1.75; color: #1d1d1f; margin-bottom: 14px;"><strong>不讓 AI 亂指。</strong>分類範圍鎖在「我負責、且還沒完成的任務」這份白名單裡,再加一道信心門檻;低於門檻就標成「待歸屬」,交回人來決定,而不是硬塞一個。</p>
+        <p style="font-size: 19px; line-height: 1.75; color: #1d1d1f; margin-bottom: 22px;"><strong>一天多任務也接得住。</strong>一次回報可以同時產生多筆工時(一個任務一筆),貼近真實的「一天會碰好幾個任務」,而不是互相覆蓋。</p>
+
+        <h2 style="font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 44px 0 18px; line-height: 1.25;">我預想它會怎麼錯</h2>
+        <p style="font-size: 19px; line-height: 1.75; color: #1d1d1f; margin-bottom: 22px;">我一開始就假設模型會出錯,並列出它會怎麼錯:把進度分到錯的任務、自己發明一條根本不存在的驗收標準、信心不足卻還硬填、或是 prompt 用久了慢慢漂掉。每一種,我都對上一道防線 —— 白名單、只能對既有驗收標準、信心門檻、還有最後那關人工確認。會錯,所以要接得住,而不是假裝它不會錯。</p>
+
+        <h2 style="font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 44px 0 18px; line-height: 1.25;">成效</h2>
+        <p style="font-size: 19px; line-height: 1.75; color: #1d1d1f; margin-bottom: 22px;">回報從「填一堆欄位」變成「貼一份 MD、按個確認」。摩擦掉了,人就更願意填;工時和驗收進度一次同步更新,主管也不必再一個個追問「這個任務到底做到哪」。原本最容易被跳過的一步,變成最省力的一步。</p>
+
+        <blockquote style="font-size: 24px; font-weight: 500; line-height: 1.45; letter-spacing: -0.015em; color: #1d1d1f; border-left: 4px solid {{ accent }}; padding: 6px 0 6px 26px; margin: 40px 0;">我以為自動化的極限是「讓人完全不用管」,後來才懂,好的自動化是「清楚知道哪裡該把人請回來」。</blockquote>
+
+        <h2 style="font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 44px 0 18px; line-height: 1.25;">我學到的</h2>
+        <p style="font-size: 19px; line-height: 1.75; color: #1d1d1f; margin-bottom: 22px;">AI 很適合接「分類與對照」這種瑣碎、但答錯了改一下就好的工;可是「驗收到底算不算達成」這種要負責的判斷,我選擇留給人。這次最大的收穫,不是把流程串起來,而是學會在設計時就先問:這一步,是可以放手的雜事,還是需要有人扛的判斷?把這條線畫清楚,比把流程全自動更重要。</p>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ===================== TAB: ABOUT ===================== -->
+  <sc-if value="{{ isAbout }}" hint-placeholder-val="{{ true }}">
+  <div>
+    <!-- HERO -->
+    <header style="padding: 88px 22px 80px; text-align: center; background: linear-gradient(180deg, #fff 0%, #fbfbfd 100%);">
+      <div style="max-width: 900px; margin: 0 auto;">
+        <p style="font-size: 19px; font-weight: 500; color: {{ accent }}; margin-bottom: 14px; letter-spacing: 0;">後端 · 自動化 · AI Agent</p>
+        <h1 style="font-size: 76px; line-height: 1.04; font-weight: 700; letter-spacing: -0.025em; margin-bottom: 24px;">Building software<br>that thinks.</h1>
+        <p style="font-size: 23px; line-height: 1.5; font-weight: 400; color: #6e6e73; max-width: 640px; margin: 0 auto;">我是陳暐霖。專注於後端開發與流程自動化,並用 AI Agent 把重複的工作交給機器處理。</p>
+      </div>
+    </header>
+
+    <!-- ABOUT STATEMENT -->
+    <section style="padding: 100px 22px; text-align: center; background: #fff;">
+      <div style="max-width: 980px; margin: 0 auto;">
+        <p style="font-size: 14px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #86868b; margin-bottom: 28px;">A new way to build</p>
+        <p style="font-size: 44px; line-height: 1.2; font-weight: 600; letter-spacing: -0.02em; color: #1d1d1f;">我把 <span style="color: {{ accent }};">Vibe coding</span> 當成日常 — 用 Codex、Claude 與各種 Agent,把腦中的想法在幾個小時內變成能跑的系統。</p>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section style="padding: 40px 22px 100px; background: #fbfbfd;">
+      <div style="max-width: 820px; margin: 0 auto;">
+        <h2 style="font-size: 52px; font-weight: 700; letter-spacing: -0.025em; text-align: center; margin-bottom: 56px;">Experience</h2>
+        <div style="display: flex; flex-direction: column; gap: 0;">
+          <div style="display: grid; grid-template-columns: 160px 1fr; gap: 28px; padding: 30px 0; border-top: 1px solid #e6e6ea;">
+            <div style="font-size: 16px; font-weight: 600; color: #86868b;">2021 — 2025</div>
+            <div><h3 style="font-size: 22px; font-weight: 600; margin-bottom: 6px;">國立高雄科技大學</h3><p style="font-size: 17px; color: #515154; line-height: 1.6;">運籌管理系 學士。專注於流程優化與供應鏈管理,並以畢業專題 Mars 專案管理系統,把所學延伸到軟體與自動化。</p></div>
+          </div>
+          <div style="display: grid; grid-template-columns: 160px 1fr; gap: 28px; padding: 30px 0; border-top: 1px solid #e6e6ea;">
+            <div style="font-size: 16px; font-weight: 600; color: #86868b;">2023 — 至今</div>
+            <div><h3 style="font-size: 22px; font-weight: 600; margin-bottom: 6px;">自主開發與 Vibe Coding</h3><p style="font-size: 17px; color: #515154; line-height: 1.6;">持續以 Codex、Claude 與 Agent 工作流開發後端與自動化專案,並把過程整理成技術筆記。</p></div>
+          </div>
+          <div style="display: grid; grid-template-columns: 160px 1fr; gap: 28px; padding: 30px 0; border-top: 1px solid #e6e6ea; border-bottom: 1px solid #e6e6ea;">
+            <div style="font-size: 16px; font-weight: 600; color: #86868b;">下一站</div>
+            <div><h3 style="font-size: 22px; font-weight: 600; margin-bottom: 6px;">正在尋找後端 / 自動化職缺</h3><p style="font-size: 17px; color: #515154; line-height: 1.6;">希望加入重視工程文化、願意導入 AI 工具的團隊,一起把產品做得更快更好。</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WRITING TEASER -->
+    <section style="padding: 90px 22px 120px; background: #fff;">
+      <div style="max-width: 820px; margin: 0 auto;">
+        <h2 style="font-size: 52px; font-weight: 700; letter-spacing: -0.025em; text-align: center; margin-bottom: 12px;">Writing</h2>
+        <p style="font-size: 21px; color: #6e6e73; text-align: center; margin-bottom: 14px;">學習筆記</p>
+        <p style="text-align: center; margin-bottom: 48px;"><a href="blog.html" style="font-size: 17px; color: {{ accent }}; text-decoration: none;">看全部文章 ›</a></p>
+        <div style="display: flex; flex-direction: column;">
+          <sc-for list="{{ posts }}" as="post" hint-placeholder-count="4">
+            <a href="blog.html" style="display: flex; align-items: baseline; justify-content: space-between; gap: 28px; padding: 28px 4px; border-top: 1px solid #ececef; text-decoration: none; color: inherit;" style-hover="background: #fbfbfd;">
+              <div style="flex: 1;">
+                <div style="display: flex; gap: 14px; align-items: center; margin-bottom: 8px;">
+                  <span style="font-size: 13px; font-weight: 600; color: {{ accent }};">{{ post.cat }}</span>
+                  <span style="font-size: 13px; color: #86868b;">{{ post.date }}</span>
+                </div>
+                <h3 style="font-size: 23px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 8px;">{{ post.title }}</h3>
+                <p style="font-size: 16px; line-height: 1.6; color: #6e6e73;">{{ post.excerpt }}</p>
+              </div>
+              <span style="font-size: 22px; color: #c7c7cc; align-self: center;">›</span>
+            </a>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ===================== TAB: CONTACT ===================== -->
+  <sc-if value="{{ isContact }}" hint-placeholder-val="{{ true }}">
+  <div>
+    <section style="padding: 130px 22px; background: #fff; text-align: center;">
+      <div style="max-width: 760px; margin: 0 auto;">
+        <h2 style="font-size: 72px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 22px;">Let's talk.</h2>
+        <p style="font-size: 22px; color: #6e6e73; line-height: 1.5; margin-bottom: 40px;">正在尋找後端與自動化相關的機會。<br>歡迎來聊聊專案,或一起做點有趣的東西。</p>
+        <a href="mailto:willima039@gmail.com" style="display: inline-block; font-size: 19px; background: {{ accent }}; color: #fff; text-decoration: none; padding: 14px 32px; border-radius: 980px; margin-bottom: 36px;">寄信給我</a>
+        <div style="display: flex; gap: 30px; justify-content: center;">
+          <a href="https://github.com/William0311" target="_blank" rel="noopener" style="font-size: 17px; color: {{ accent }}; text-decoration: none;">GitHub ›</a>
+          <a href="mailto:willima039@gmail.com" style="font-size: 17px; color: {{ accent }}; text-decoration: none;">Email ›</a>
+        </div>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- FOOTER (persistent) -->
+  <footer style="background: #f5f5f7; padding: 40px 22px; border-top: 1px solid #e2e2e6;">
+    <div style="max-width: 1024px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+      <p style="font-size: 13px; color: #86868b;">陳暐霖 · Wei-Lin Chen — 國立高雄科技大學 運籌管理系</p>
+      <p style="font-size: 13px; color: #86868b;">© 2026 設計給未來的我。Apple-inspired.</p>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#0071e3&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { tab: 'work' };
+
+  pick(t) {
+    this.setState({ tab: t }, () => { try { window.scrollTo(0, 0); } catch (e) {} });
+  }
+
+  renderVals() {
+    const accent = this.props.accent ?? '#0071e3';
+    const tab = this.state.tab || 'work';
+    const tabDefs = [
+      { key: 'work', label: '作品' },
+      { key: 'mars', label: 'Mars' },
+      { key: 'features', label: 'AI 功能' },
+      { key: 'about', label: 'About' },
+      { key: 'contact', label: 'Contact' },
+    ];
+    const tabs = tabDefs.map(t => {
+      const on = t.key === tab;
+      return {
+        label: t.label,
+        onPick: () => this.pick(t.key),
+        color: on ? '#1d1d1f' : '#86868b',
+        weight: on ? '600' : '400',
+        border: on ? '#1d1d1f' : 'transparent',
+      };
+    });
+
+    return {
+      accent,
+      tabs,
+      isWork: tab === 'work',
+      isMars: tab === 'mars',
+      isFeatures: tab === 'features',
+      isAbout: tab === 'about',
+      isContact: tab === 'contact',
+      goWork: () => this.pick('work'),
+      goFeatures: () => this.pick('features'),
+      marsStack: ['FastAPI', 'PostgreSQL', 'React', 'Redis', 'Docker', 'Claude API', 'WebSocket'],
+      skillGroups: [
+        { area: '後端開發', items: 'Python · FastAPI · Node.js · PostgreSQL · REST / GraphQL · Redis' },
+        { area: 'AI & Agent', items: 'Claude · Codex · LangChain · RAG · Function Calling · Prompt 工程' },
+        { area: '自動化', items: 'n8n · GitHub Actions · Webhook · 排程任務 · 爬蟲 · ETL' },
+        { area: 'DevOps 與工具', items: 'Git · Docker · Linux · Nginx · CI/CD · Zeabur / Vercel' },
+        { area: '資料與分析', items: 'SQL · Pandas · 報表自動化 · 資料視覺化' },
+        { area: '領域知識', items: '運籌管理 · 流程優化 · 供應鏈 · 專案管理' },
+      ],
+      projects: [
+        { name: 'Mars 專案管理系統', tag: '畢業專題 · 全端', desc: '整合任務看板、甘特圖與自動化通知的全端專案管理平台。最新加入「進度回報 × AI 驗收分析」:上傳一份進度,就自動對齊到任務與驗收標準。後端以 FastAPI 打造,並用 Agent 自動分派與摘要任務。', meta: '2024 — 至今', cta: '到 Mars 分頁看細節 ›', onOpen: () => this.pick('mars') },
+        { name: 'Convate 分身擂台', tag: 'AI 對戰 · 全端', desc: '針對熱門議題與 AI 分身正面交鋒的辯論練習平台。挑一個發燒議題發起對戰,在來回攻防裡練習表達、論證與換位思考。後端處理議題管理與對戰流程,前端走乾淨俐落的 flat 設計。', meta: '個人專案 · 2026', cta: '', onOpen: () => {} },
+      ],
+      posts: [
+        { cat: '與 AI 協作', date: '2025 · 10', title: '我想做到全自動,卻在「驗收」這一關停下了手', excerpt: '本來想上傳一份進度全交給 AI,真的動手才在「驗收」前面慢了下來。' },
+        { cat: 'AI Agent', date: '2025 · 06', title: '我如何用 Agent 把專案管理自動化', excerpt: '從手動分派任務,到讓 Agent 讀懂需求、拆解工作並自動指派的實作筆記。' },
+        { cat: 'Vibe Coding', date: '2025 · 04', title: 'Vibe coding 一週,做出一個能用的後端', excerpt: '用 Codex 與 Claude 協作開發的流程、踩過的坑,以及哪些事還是得自己想清楚。' },
+        { cat: '後端', date: '2025 · 02', title: 'FastAPI 從零到上線的踩雷紀錄', excerpt: '專案結構、非同步、資料庫遷移與部署,新手最容易卡住的幾個地方。' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

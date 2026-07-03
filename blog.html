@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--ARTICLES-->
+<script>window.__BLOG_ARTICLES__ = [{"cat":"系統整合","date":"2025 · 11","read":"9 分鐘","title":"串接兩套系統，我才學會問「事實住在哪裡」","lead":"公司同時長出兩套系統：一套管專案怎麼開發，一套管進度回報到哪。把它們接起來、再讓 AI 進場之後，我才發現最難的不是寫 API，而是回答一個問題：事實住在哪裡？","body":[{"t":"h","x":"公司裡長出了兩套系統"},{"t":"p","x":"一套是 Mars 專案管理系統：任務、進度回報、工時，大家每天實際工作的地方。另一套是 Agent 工作台：讓 AI 協助整理需求、規格與開發文件的地方。兩套各自都好用，但同一個專案在兩邊各有一份資料。起初只是小小的不方便，久了就變成真正的問題 —— 這邊更新了、那邊忘了，開會時兩套系統各說各話，沒有人確定哪一份才是真的。"},{"t":"h","x":"Agent 工作台教我的開發模式"},{"t":"p","x":"工作台做的事，是讓 AI 協助把一個專案「該想清楚的事」變成文件：企畫書、需求規格、開發計畫。而它從一開始就被幾條原則框住：資料庫是唯一的主庫，AI 只負責推理，不保管事實；資料送出去給模型之前，先把可識別的資訊拿掉；每一次 AI 的產出，從輸入到結論全程留下紀錄。一開始我覺得這些規矩很囉嗦 —— 直接把資料全部丟給 AI 不是更快嗎？"},{"t":"p","x":"真的照著做了幾個月，我才體會到差別。因為事實永遠在資料庫裡，AI 講錯了隨時可以對回去；因為全程留痕，出了問題可以回溯是哪一步的判斷歪了。這徹底改變了我對「導入 AI」的想像：重點不是把 AI 塞進流程裡，而是先決定好 —— 事實歸誰管。"},{"t":"quote","x":"AI 可以推理，但不該保管事實。事實住在資料庫裡，AI 只是借閱。"},{"t":"h","x":"文件也能往回補：反推既有專案"},{"t":"p","x":"工作台不只服務新專案。公司裡更多的是「先做出來、文件欠著」的既有系統 —— 功能一直在長，說明它的文件卻停在很久以前，甚至從來沒有存在過。於是我們讓 AI 反過來做一件事：讀既有專案的現況，反推出它「當初應該要有」的那套文件 —— 企畫書、需求規格、開發計畫的草稿 —— 再由人逐份校對定稿。"},{"t":"p","x":"做這件事的過程，我學到一個很微妙的技巧：你給 AI 的題目，就是它的取景框。用整個平台的名字去問，得到的是一份全貌式的企畫書；把範圍縮到單一模組，它就會往深處挖，吐出那個模組才有的規格細節。同一套資料，取景框不同，反推出來的文件就完全不同 —— 問題問得多準，文件就有多準。"},{"t":"p","x":"反推出來的文件，很快就長出了幾種用途：補上積欠多年的文件債；給新加入的人一份「系統現在真正的樣子」，而不是口耳相傳的版本；更有趣的是，它會照出「大家以為系統長怎樣」和「它實際長怎樣」之間的落差 —— 那些落差往往就是下一批該修的問題。而它最大的用途，要等到後面把兩套系統接起來才真正浮現。"},{"t":"h","x":"Mars 的進度回報：讓回報發生在工作發生的地方"},{"t":"p","x":"另一頭，Mars 的進度回報也走過類似的路。以前回報是「另外寫一份文件」：週五下午大家憑記憶回想這週做了什麼，寫出來的東西和系統裡的任務狀態常常對不上。後來我們把回報直接掛在任務上 —— 工時、進度、驗收綁在一起，回報就是工作本身的副產品，而不是另一份要維護的平行事實。"},{"t":"p","x":"AI 在這裡的角色是彙整：把一週裡零散的任務更新、工時紀錄整理成週報草稿。人要做的，只剩下補上機器看不見的東西 —— 卡在哪裡、需要什麼支援、下週的優先序。寫週報從回憶測驗，變成確認與補充判斷。"},{"t":"h","x":"串接：先對齊身分，再談同步"},{"t":"p","x":"然後就到了把兩套系統接起來的時候。我原本以為這是個技術活：開幾條 API、寫幾支同步程式。真的動手才發現，第一步跟程式碼無關 —— 是先讓兩邊「指向同一個專案」。我們做的第一件事，只是給每個專案一個兩邊共用的代號，讓 Mars 裡的專案和工作台裡的專案，確定講的是現實中同一件事。"},{"t":"code","x":"# 動手同步之前，我先回答三個問題：\n1. 這個專案在兩邊，是不是同一個身分？\n2. 每個欄位的「事實來源」是哪一套系統？\n3. 資料是單向流動，還是允許兩邊都改？\n\n# 第三題答不出來的欄位，先不要同步。"},{"t":"p","x":"身分對齊之後，每個欄位的同步都變成同一句提問：這個欄位的事實來源是誰？任務與進度的事實在 Mars，開發文件的事實在工作台 —— 讓資料單向流動，永遠只有一邊有權利改。允許兩邊都寫的欄位，遲早會在某個沒人注意的時刻悄悄互相覆蓋。"},{"t":"h","x":"文件不再只是存檔：企畫書成了 Mars 的輸入"},{"t":"p","x":"串接之後，最讓我有感的變化是：工作台產出的文件，開始有了「下游」。以前企畫書寫完就沉進資料夾，規劃與執行是兩個世界；現在 Mars 的 AI 可以直接拿這些文件當依據 —— 讀進企畫書裡的目標與交付項目，展開成一份新專案的規劃草稿：要開什麼專案、拆成哪些任務、大致的先後順序。"},{"t":"p","x":"當然，草稿仍然只是草稿。人看過、調整、按下確認，專案與任務才真正建立。而且這條路不只通新專案 —— 前面反推出來的既有專案文件，同樣可以餵給 Mars，變成下一期任務規劃的依據。新專案往前寫文件，舊專案往回補文件，兩條路最後通到同一個地方：執行系統裡的專案與任務。"},{"t":"p","x":"這條路打通之後，「寫文件」這件事在我心裡的意義完全變了：它不再是交差用的成本，而是餵給下一步的燃料 —— 規劃階段想得越清楚，執行系統裡長出來的任務就越不需要人重新想一遍。"},{"t":"h","x":"回頭看，AI 在這一切裡的作用"},{"t":"p","x":"把這些功能攤開來看 —— 從現況反推出文件草稿、把任務更新彙整成週報、把企畫書展開成專案與任務的規劃草稿 —— 我發現它們全部長成同一個模式：AI 整理，人確認，系統執行，全程留痕。沒有一個功能是讓 AI 直接改動事實的。"},{"t":"quote","x":"AI 的價值不是替我做決定，而是把散落的事實，整理成我能負責的樣子。"},{"t":"h","x":"學到的事"},{"t":"p","x":"這次串接，寫程式的時間其實是最少的。花最多時間的，是決定事實的位置、資料的流向、還有 AI 的邊界。系統只會越長越多，我現在相信，工程師之後最重要的功課之一，就是在系統增生的過程裡，守住兩件事：事實只有一份，責任有人承擔。"}]},{"cat":"與 AI 協作","date":"2025 · 10","read":"5 分鐘","title":"我想做到全自動，卻在「驗收」這一關停下了手","lead":"我本來的目標很單純：上傳一份進度，剩下全交給 AI。真的動手做，我才在「驗收」這兩個字前面慢了下來。","body":[{"t":"h","x":"我一開始要的是「全自動」"},{"t":"p","x":"我想做一件很順的事：每個人只要把今天做了什麼丟上來，系統就自動判斷這對應到哪個專案、哪個任務，再把進度對齊到該完成的事項上。中間不需要誰再點來點去。越少人工，我以為就越好。"},{"t":"h","x":"分類它做得很好，問題出在下一步"},{"t":"p","x":"真的做下去，我發現 AI 把「這段進度屬於哪個任務」判斷得相當準，卡住我的不是這裡。卡住我的是再下一步：要不要讓它直接把任務的「驗收標準」標記成已完成？"},{"t":"p","x":"我盯著這個問題很久。把進度分到對的任務，頂多分錯了再改；但「這條驗收標準到底算不算達成」是一個帶著責任的判斷 —— 它代表「這件事我認了、可以收了」。這不是分類，是一種承諾。"},{"t":"code","x":"# 我反覆問自己的一句話：\n這一步錯了，代價是「改一下」，\n還是「有人以為做完了，其實沒有」？\n\n# 前者可以放手，後者一定要留人。"},{"t":"h","x":"我把「建議」和「確認」拆開"},{"t":"p","x":"最後我沒有把它做成全自動。我讓 AI 只負責「看起來達成了哪些、把比對結果列出來」，但真正按下確認的，是當事人自己；要正式採納、寫定下來，再由負責把關的人點頭。AI 把繁瑣的比對全做完，卻把判斷原封不動地留給該負責的人。"},{"t":"p","x":"神奇的是，這樣反而更好用。因為大家都知道，最後拍板的還是人，所以才願意相信前面那段自動化 —— 它沒有偷偷替誰做了決定。"},{"t":"quote","x":"我以為自動化的極限是「讓人完全不用管」，後來才懂，好的自動化是「清楚知道哪裡該把人請回來」。"},{"t":"h","x":"這一關讓我想得更遠"},{"t":"p","x":"這次最大的收穫，不是把一套流程串起來，而是學會在設計的時候先問自己：這一步，是可以放手的雜事，還是需要有人負責的判斷？越靠近「要對結果負責」的地方，我越不急著自動化。能把這條線畫清楚，比能寫出多聰明的自動化更重要 —— 而這條線，到現在都還是得由人來畫。"}],"updated":"2026-06-23"},{"cat":"與 AI 協作","date":"2025 · 09","read":"5 分鐘","title":"和 AI 對話，逼我先想清楚自己要什麼","lead":"我本來以為瓶頸是 AI 不夠聰明，後來發現，卡住的常常是「我自己也還沒想明白」。","body":[{"t":"h","x":"一句模糊的要求，換來一堆要重改的東西"},{"t":"p","x":"剛開始我很依賴 AI，常常丟一句很模糊的要求就期待它讀懂我要什麼。它會很快給我一段東西，但十之八九不是我要的 —— 不是它笨，是我給的太少，它只能用猜的。改它的時間，常常比我自己做還久。"},{"t":"p","x":"一開始我怪工具。直到有幾次，我為了把需求講清楚給它聽，寫到一半自己愣住：原來連我自己都還沒想明白要什麼。問題從來不在它，在我。"},{"t":"h","x":"它變成一面照我自己的鏡子"},{"t":"p","x":"後來每次要請 AI 幫忙，我會先逼自己把脈絡講清楚：要處理什麼資料、彼此什麼關係、這次只動哪裡、哪些不能碰、怎樣才算做對了。神奇的是，光是把這些寫出來的過程，我自己對問題的理解就清楚了一大半。"},{"t":"code","x":"# 與其急著叫它動手，我會先把這幾件事講清楚：\n- 我真正要解決的是什麼問題？\n- 會碰到哪些資料、有哪些限制？\n- 這次的範圍到哪，哪些不要動？\n- 怎樣才算做對了？"},{"t":"p","x":"很多時候，我還沒把這幾句寫完，答案就已經自己浮出來了 —— 根本還沒輪到 AI 出手。"},{"t":"quote","x":"我以為我在學怎麼跟 AI 說話，其實我在學怎麼把自己的想法想清楚。"},{"t":"h","x":"這件事改變了我的順序"},{"t":"p","x":"以前我急著動手，邊做邊想；現在我會先把要做的事對自己講清楚，再開始。聽起來像是多了一道工，實際上快很多，因為我不再做到一半才發現方向錯了、整段拆掉重來。AI 沒有讓我變得不用思考，反而逼我把思考提前。"}],"updated":"2026-06-23"},{"cat":"與 AI 協作","date":"2025 · 08","read":"5 分鐘","title":"我學會懷疑「看起來對」的東西","lead":"AI 給的東西常常很有條理、讀起來很合理，於是我就信了。幾次踩雷之後，我學到的其實是對自己誠實。","body":[{"t":"h","x":"合理，不等於正確"},{"t":"p","x":"用 AI 之後我產出變多，但也養出一個壞習慣：它寫得很有條理、邏輯讀起來很順，我就放過了。後來那些「看起來對」的東西，常常在我沒注意的邊角出錯。我才發現，被說服的不是我的判斷，是我的惰性。"},{"t":"p","x":"一開始我以為解法是更用力地讀每一行。但真正讓我進步的，不是讀得更兇，而是換一種心態：預設它可能是錯的，然後去找它哪裡會錯。"},{"t":"h","x":"我問問題的方式變了"},{"t":"p","x":"我發現，連我怎麼問，都會決定我得到什麼。如果我問「這樣對嗎」，我其實是在求一個安心的答案；如果我問「這裡會在哪裡出錯」，我才是真的在檢查。同一段東西，後者讓我看見前者永遠看不到的問題。"},{"t":"code","x":"# 我從這樣問\n「這樣寫應該沒問題吧？」\n\n# 改成這樣問\n「假設這裡一定有問題，會是哪裡先出錯？」"},{"t":"p","x":"這個轉變聽起來很小，但它逼我面對一件事：我之前要的，常常不是真相，是放心。"},{"t":"quote","x":"最難懷疑的不是 AI，是那個想趕快相信它、好早點收工的自己。"},{"t":"h","x":"它讓我對自己更誠實"},{"t":"p","x":"這個習慣後來不只用在 AI 上。我開始用同樣的眼光看自己寫的、自己以為懂的東西。「我覺得這樣應該可以」這句話，在我心裡的份量變輕了 —— 因為我太知道，覺得對和真的對，中間還隔著一次驗證。AI 教我的，原來是一種對自己作品的誠實。"}],"updated":"2026-06-23"},{"cat":"與 AI 協作","date":"2025 · 07","read":"5 分鐘","title":"把事情拆清楚，原來比親手做完更難","lead":"我一直以為「會做」就夠了。和 AI 一起工作之後我才發現，把一件複雜的事拆清楚，是另一種更難、也更重要的能力。","body":[{"t":"h","x":"我想一次做完，結果一團亂"},{"t":"p","x":"在 Agent 工作台的開發裡，我一開始很貪心，總想把一個又大又雜的需求一口氣解決掉。不管是自己埋頭做，還是丟給 AI，結果都一樣：做到後面我自己都搞不清楚動過哪些地方，前後對不上，錯了也難找。"},{"t":"p","x":"我以為問題是「還不夠熟練」。後來才懂，真正的問題是：我根本沒先把這件事拆清楚，就急著動手了。"},{"t":"h","x":"我學著先想清楚邊界"},{"t":"p","x":"我開始強迫自己在動手前先拆：這件事可以切成哪幾塊？哪些彼此不相干、可以分開做？每一塊小到什麼程度，我才能一眼看懂它在幹嘛？拆得乾淨的時候，無論是我自己做、還是交給 AI，都順得多；拆不乾淨，怎麼做都卡。"},{"t":"code","x":"# 動手前我先問自己：\n- 這件事能切成哪幾塊？\n- 哪些可以獨立完成、不必等別人？\n- 每一塊，我審得動嗎？"},{"t":"p","x":"拆得好的時候，連交出去都變簡單 —— 每一小塊完成我就能確認一次，而不是最後面對一坨自己都看不完的東西。"},{"t":"quote","x":"我以為價值在於把它寫出來，後來發現，價值更多在於把它想清楚。"},{"t":"h","x":"這是我現在更想練的能力"},{"t":"p","x":"我慢慢覺得，把複雜的事拆成清楚、能各自完成的小塊，這件事比我手快、能多寫幾行更重要。它不分對象 —— 不管面對的是 AI，還是一群人，能把事情拆清楚的人，永遠比較稀缺。這是我接下來想一直練下去的東西。"}],"updated":"2026-06-23"},{"cat":"AI Agent","date":"2025 · 06","read":"6 分鐘","title":"我如何用 Agent 把專案管理自動化","lead":"從手動分派任務,到讓 Agent 讀懂需求、自動拆解並指派工作 —— 這是我在 Mars 專案裡的實作筆記。","body":[{"t":"h","x":"問題:會議結束後,沒人想分派任務"},{"t":"p","x":"在 Mars 專案管理系統的早期版本,每一個任務都要有人手動建立、填寫負責人與截止日。會議一結束,大家就各自散去,真正把待辦項目整理進系統的往往只剩下我。重複、瑣碎,而且很容易漏掉。"},{"t":"p","x":"於是我開始想:如果有一個 Agent 能直接讀懂我們的會議記錄,自動把該做的事整理出來呢?"},{"t":"h","x":"把需求丟給 Agent"},{"t":"p","x":"我用 Claude 的 function calling,定義了一個建立任務的工具,再把會議記錄整段丟給它。Agent 要做的不是聊天,而是輸出一份結構化的任務清單。"},{"t":"code","x":"tasks = agent.run(meeting_notes)\n# → [{ \"title\": \"修正登入流程\",\n#      \"owner\": \"暐霖\",\n#      \"due\": \"2025-06-30\" }, ...]"},{"t":"p","x":"它會判斷哪些句子代表一個待辦、誰比較適合負責,甚至從「下週前」這種模糊說法推算出日期。產出的清單再經過我快速確認,就能直接寫進資料庫。"},{"t":"h","x":"讓它真的去做事"},{"t":"p","x":"光是產生任務還不夠。我把 Agent 接上系統的通知模組,任務一建立就自動發訊息給負責人,並在截止前提醒。人要做的,只剩下「決定」與「執行」。"},{"t":"quote","x":"自動化不是取代判斷,而是把判斷留給真正需要的地方。"},{"t":"h","x":"學到的事"},{"t":"p","x":"Agent 很擅長處理「結構化的重複」,但邊界要由人來畫。把它能做與不該做的事分清楚,系統才會穩。這個專案讓我相信,未來的後端工程師,有一大部分工作會是設計人與 Agent 的協作流程。"}],"updated":"2026-06-23"},{"cat":"工程習慣","date":"2025 · 05","read":"5 分鐘","title":"「修好了」之前,我學會先跑一次驗證","lead":"在 Mars 開發裡最深的一課:沒有實際跑過,就不能說「修好了」—— 包括 AI 幫我寫的那些。","body":[{"t":"h","x":"一句「應該好了」的代價"},{"t":"p","x":"開發 Mars 的過程中,我曾經改完一段邏輯,看著程式碼覺得「這樣應該對了」,就回報修好了。結果隔天問題照樣出現 —— 我改的根本不是真正在跑的那一段。從那次之後,我給自己定了一條規矩:沒有實際跑過、親眼看到預期的結果,就不准說「修好了」。"},{"t":"h","x":"AI 說做完,不等於真的做完"},{"t":"p","x":"後來我大量用 AI 來幫忙寫程式。它很會給你一段「看起來完成了」的回覆,但「它說做完」和「真的做完」是兩件事。我學會每一次都自己去看實際改了什麼、把服務真的叫起來、用一個真實的請求驗證行為,而不是相信那句總結。"},{"t":"code","x":"# 改完之後,我一定做這三件事\n1. 看實際改了什麼(diff)\n2. 把服務真的跑起來\n3. 用一個真實請求,確認行為符合預期"},{"t":"p","x":"這個習慣讓我多花幾分鐘,卻幫我擋掉無數次「在我電腦上明明可以」。"},{"t":"quote","x":"證據先於宣稱。沒有輸出,就只是一個願望。"},{"t":"h","x":"為什麼這件小事值得寫下來"},{"t":"p","x":"因為它無關技術深淺,而是一種態度。當系統越來越大、越來越多人依賴它,「我以為修好了」造成的成本會被一路放大。先驗證,是我目前找到最便宜的保險。"}],"updated":"2026-06-23"},{"cat":"Vibe Coding","date":"2025 · 04","read":"5 分鐘","title":"Vibe coding 一週,做出一個能用的後端","lead":"用 Codex 與 Claude 協作開發的流程、踩過的坑,以及哪些事還是得自己想清楚。","body":[{"t":"h","x":"先說結論"},{"t":"p","x":"一週的時間,我用 Vibe coding 的方式做出了一個能跑、能部署、有測試的後端服務。速度遠超我自己手刻,但前提是:我得清楚知道自己要什麼。"},{"t":"h","x":"我的流程"},{"t":"p","x":"我習慣先用文字把需求與資料模型寫清楚,再讓 Codex 幫我生出骨架,接著用 Claude 來討論架構決策、重構與除錯。AI 負責打字,我負責決定方向。"},{"t":"code","x":"# 我給的不是「寫個 API」\n# 而是這樣的脈絡:\n- 資料表:user, project, task\n- task 屬於 project,project 有多個成員\n- 需要分頁與權限檢查"},{"t":"p","x":"脈絡給得越清楚,產出的程式碼越接近可用。模糊的需求只會換來模糊的程式。"},{"t":"h","x":"踩到的坑"},{"t":"p","x":"最大的坑是「看起來對」的程式。AI 產出的程式碼常常能跑,卻在邊界情況出錯。我學會不全盤接受,而是把每段邏輯讀過一遍,再補上自己的測試。"},{"t":"quote","x":"AI 讓我更快,但沒讓我更不用懂。它放大的是判斷力,不是無知。"},{"t":"h","x":"還是得自己想的事"},{"t":"p","x":"架構怎麼切、資料怎麼建模、什麼時候該停下來重構 —— 這些需要經驗與品味的判斷,目前還是得由人來下。Vibe coding 把我從打字裡解放出來,讓我有更多時間思考這些真正重要的問題。"}],"updated":"2026-06-23"},{"cat":"後端","date":"2025 · 03","read":"6 分鐘","title":"一個 00:00 引發的 bug:我重新理解了「儲存」與「顯示」","lead":"使用者明明在下午上傳,系統卻顯示早上八點。一個只存了日期、沒存時間的欄位,讓我上了一堂時區課。","body":[{"t":"h","x":"「為什麼全部都顯示早上八點?」"},{"t":"p","x":"Mars 裡有一個會記錄某件事發生日期的功能。有天我發現,一批資料的時間全部顯示成早上 08:00 —— 一個沒有人選過的時間。一開始我以為是顯示端的小問題,翻了很久才發現,根源在更上游。"},{"t":"h","x":"只存日期的陷阱"},{"t":"p","x":"那個欄位只記了「日期」,沒有「時間」。當系統把它存進資料庫時,等於自動補上了「當天的午夜零點」。而這個零點,是用 UTC(世界協調時間)算的。"},{"t":"code","x":"# 實際存進去的是\n2025-03-10T00:00:00Z   # UTC 的午夜\n# 台北是 UTC+8,顯示時就變成\n2025-03-10 08:00       # 早上八點"},{"t":"p","x":"台北比 UTC 快八小時,於是 UTC 的午夜零點,到了使用者眼前就成了早上八點。資料本身沒錯,錯的是我沒想清楚:存的到底是「哪個時區的哪個時刻」。"},{"t":"h","x":"修法與原則"},{"t":"p","x":"我把「只有日期」這種情況獨立出來處理,讓它保留日期、採用合理的當地時間,而不是預設那個會誤導人的午夜零點。從那之後,面對任何時間欄位,我都會多問一句:這是哪個時區?它是某個精確的瞬間,還是只是一整天?"},{"t":"quote","x":"時間從來不只是數字,它總是綁著一個你沒注意到的時區。"},{"t":"h","x":"學到的事"},{"t":"p","x":"這類 bug 的可怕在於「資料看起來完全正常」,只是顯示得不對,很難一眼看出。它教會我:儲存與顯示是兩件要分開想清楚的事,而中間那層轉換,往往才是最容易出錯的地方。"}],"updated":"2026-06-23"},{"cat":"後端","date":"2025 · 02","read":"7 分鐘","title":"FastAPI 從零到上線的踩雷紀錄","lead":"專案結構、非同步、資料庫遷移與部署 —— 新手最容易卡住的幾個地方。","body":[{"t":"h","x":"為什麼選 FastAPI"},{"t":"p","x":"型別提示、自動產生的 API 文件、原生的非同步支援,還有夠快的效能。對一個剛要把運籌管理背景轉向後端的人來說,它的學習曲線剛剛好。"},{"t":"h","x":"專案結構別偷懶"},{"t":"p","x":"一開始我把所有東西塞在一個檔案裡,等到功能變多就一團亂。後來我把路由、資料模型、商業邏輯與資料庫存取分層,維護起來輕鬆太多。"},{"t":"code","x":"app/\n├─ routers/    # API 路由\n├─ models/     # 資料模型\n├─ services/   # 商業邏輯\n└─ db.py       # 連線設定"},{"t":"h","x":"非同步不是萬靈丹"},{"t":"p","x":"我曾經以為把所有函式都加上 async 就會變快。事實是:如果底層的資料庫呼叫是同步的,async 反而會擋住整個事件迴圈。要快,整條路徑都得是非同步的。"},{"t":"h","x":"資料庫遷移"},{"t":"p","x":"用 Alembic 管理 schema 變更,讓每一次資料表的調整都有紀錄、可回溯。這件事在開發初期感覺多餘,上線後卻救了我好幾次。"},{"t":"quote","x":"上線前覺得麻煩的工程習慣,上線後都會變成你的保險。"},{"t":"h","x":"部署"},{"t":"p","x":"我用 Docker 把環境打包,推到 Zeabur 上跑。把設定都放進環境變數、用健康檢查確認服務存活,從本機到正式環境就不再有「在我電腦上明明可以」的問題。"}],"updated":"2026-06-23"},{"cat":"後端","date":"2025 · 01","read":"5 分鐘","title":"寫程式前,先跟現實對齊","lead":"我踩過最多的雷,都不是程式寫錯,而是「我以為的資料結構」跟它真正的樣子不一樣。","body":[{"t":"h","x":"假設,是最貴的東西"},{"t":"p","x":"在 Mars 這種已經跑了一段時間的系統上開發,最容易出事的不是「不會寫」,而是「想當然耳」。我曾經照著腦中以為的資料結構動手,寫到一半才發現真實的限制跟我想的不一樣 —— 接著就是好幾個小時的回頭重做。"},{"t":"h","x":"三十秒的查證,省下三小時的回填"},{"t":"p","x":"後來我養成一個習慣:動工之前,先花三十秒去確認資料真正長什麼樣 —— 有哪些欄位、有哪些限制、改動一處會不會牽動別的地方。這三十秒,救過我太多次。"},{"t":"code","x":"# 動手前先問清楚\n- 這裡真正有哪些欄位?\n- 有哪些限制(不能重複、不能空白)?\n- 改了它,會影響到誰?"},{"t":"p","x":"我把它寫成自己的規矩:先把要改的範圍、會碰到的資料、以及「怎樣才算做對了」寫清楚,再開始動程式。需求對齊了現實,程式才不會蓋在沙子上。"},{"t":"quote","x":"大多數的 bug,不是寫錯了,而是一開始就理解錯了。"},{"t":"h","x":"它改變了我寫程式的順序"},{"t":"p","x":"以前我急著打開編輯器,現在我會先花時間搞懂現況。聽起來變慢,實際上快很多 —— 因為我不再需要把寫到一半的東西整個拆掉重來。"}],"updated":"2026-06-23"},{"cat":"前端","date":"2024 · 12","read":"5 分鐘","title":"兩個讓我找很久的 CSS 幽靈 bug","lead":"程式碼看起來完全正確,畫面就是不對。sticky 不吸頂、彈出層跑到旁邊 —— 兩個關於「定位」的教訓。","body":[{"t":"h","x":"幽靈一:sticky 怎麼貼都不吸頂"},{"t":"p","x":"我想讓一塊區域在捲動時固定在頂端,寫了 position: sticky,卻完全沒反應。檢查了好幾遍,語法明明都對。後來才知道:當 sticky 直接套在 grid 或 flex 的「直接子項目」上時,常常會失效。"},{"t":"p","x":"解法很簡單卻反直覺 —— 在外面多包一層,讓 sticky 套在「那一層的普通子元素」上,它就乖乖吸頂了。"},{"t":"code","x":"<!-- 失效:sticky 直接放在 grid item 上 -->\n<div class=\"grid-item\" style=\"position:sticky\">…</div>\n\n<!-- 有效:多包一層,sticky 放在子元素 -->\n<div class=\"grid-item\">\n  <div style=\"position:sticky\">…</div>\n</div>"},{"t":"h","x":"幽靈二:彈出層跑到畫面旁邊"},{"t":"p","x":"另一個 bug 是一個下拉選單,在某些彈窗裡會跑到右邊、甚至被裁掉。元件本身沒問題,因為換個地方用就正常。"},{"t":"p","x":"真相是:當一個祖先元素用了 transform(例如置中用的位移),它裡面的 position: fixed 就不再以整個畫面為基準,而是改以那個祖先為基準。於是用畫面座標算出來的位置,全錯了。"},{"t":"p","x":"解法是把彈出層直接「傳送」到頁面的最外層,讓它脫離那個會干擾它的祖先。而且只要修那一個共用元件,所有用到它的地方就一起好了。"},{"t":"quote","x":"CSS 沒有魔法。當它看起來不講道理,通常是某個你沒注意到的規則正在生效。"},{"t":"h","x":"學到的事"},{"t":"p","x":"這兩個 bug 都不是打錯字,而是我對「定位的基準到底是誰」理解得不夠深。前端的很多坑,都藏在這種「看不見的上下文」裡。遇到「程式明明對、卻沒效果」時,我學會先回頭確認:這段樣式真正的參考座標,究竟是誰?"}],"updated":"2026-06-23"},{"cat":"自動化","date":"2024 · 11","read":"4 分鐘","title":"用 n8n 串起每天的瑣碎工作","lead":"把抓資料、整理、通知這些重複動作交給流程引擎,省下的時間拿去學新東西。","body":[{"t":"h","x":"從一個很煩的日常開始"},{"t":"p","x":"每天早上,我要從幾個來源把數據抓下來、整理成報表、再貼到群組裡。一次大概 15 分鐘,但天天做就是一種消耗。"},{"t":"h","x":"為什麼是 n8n"},{"t":"p","x":"它是視覺化的流程引擎,把「觸發 → 取資料 → 處理 → 通知」串成一條看得見的流水線。不用為了自動化再養一台伺服器、寫一堆樣板程式。"},{"t":"code","x":"Cron (每天 08:00)\n  → HTTP 抓資料\n  → Function 整理格式\n  → 發送到通訊軟體"},{"t":"h","x":"結果"},{"t":"p","x":"原本每天 15 分鐘的手動作業降到零,而且再也不會忘記或出錯。更重要的是,我把這套思維套用到其他工作上 —— 只要是重複的,就值得問一句:這能不能自動化?"},{"t":"quote","x":"省下的不只是時間,而是把注意力留給只有人能做的事。"}],"updated":"2026-06-23"}];</script>
+<!--/ARTICLES-->
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #fff; }
+  ::selection { background: #b3d4fc; }
+  html { scroll-behavior: smooth; }
+</style>
+</helmet>
+
+<div style="font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Noto Sans TC', sans-serif; color: #1d1d1f; background: #fff; -webkit-font-smoothing: antialiased; letter-spacing: -0.01em; min-height: 100vh;">
+
+  <!-- NAV -->
+  <nav style="position: sticky; top: 0; z-index: 100; height: 48px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.72); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(0,0,0,0.08);">
+    <div style="width: 100%; max-width: 980px; padding: 0 22px; display: flex; align-items: center; justify-content: space-between;">
+      <span onClick="{{ goHome }}" style="font-size: 17px; font-weight: 600; color: #1d1d1f; cursor: pointer; letter-spacing: 0;">暐霖 · Writing</span>
+      <div style="display: flex; gap: 28px; align-items: center;">
+        <span onClick="{{ goHome }}" style="font-size: 12px; color: #1d1d1f; cursor: pointer; opacity: 0.85;">文章</span>
+        <a href="index.html" style="font-size: 12px; color: #1d1d1f; text-decoration: none; opacity: 0.85;">作品集</a>
+        <a href="#contact" style="font-size: 12px; color: #1d1d1f; text-decoration: none; opacity: 0.85;">關於</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===================== LIST VIEW ===================== -->
+  <sc-if value="{{ isList }}" hint-placeholder-val="{{ true }}">
+  <div>
+    <!-- Header -->
+    <header style="padding: 100px 22px 60px; text-align: center; background: linear-gradient(180deg,#fff,#fbfbfd);">
+      <div style="max-width: 800px; margin: 0 auto;">
+        <p style="font-size: 19px; font-weight: 500; color: {{ accent }}; margin-bottom: 14px;">後端 · 自動化 · AI Agent</p>
+        <h1 style="font-size: 76px; line-height: 1.05; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 22px;">Writing</h1>
+        <p style="font-size: 22px; line-height: 1.5; color: #6e6e73; max-width: 600px; margin: 0 auto;">我把開發過程、踩過的坑與想法寫下來。關於 Vibe coding、AI Agent、後端與自動化。</p>
+      </div>
+    </header>
+
+    <!-- Filter chips -->
+    <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; padding: 0 22px 50px; max-width: 760px; margin: 0 auto;">
+      <sc-for list="{{ filters }}" as="f" hint-placeholder-count="5">
+        <span onClick="{{ f.onPick }}" style="font-size: 15px; font-weight: 500; cursor: pointer; padding: 8px 18px; border-radius: 980px; border: 1px solid {{ f.border }}; color: {{ f.color }}; background: {{ f.bg }};">{{ f.label }}</span>
+      </sc-for>
+    </div>
+
+    <!-- Featured -->
+    <sc-if value="{{ showFeatured }}" hint-placeholder-val="{{ true }}">
+    <section style="padding: 0 22px 56px;">
+      <div onClick="{{ featured.onOpen }}" style="max-width: 980px; margin: 0 auto; background: #000; color: #f5f5f7; border-radius: 28px; padding: 70px 60px; cursor: pointer; overflow: hidden;">
+        <span style="font-size: 13px; font-weight: 600; color: #2997ff; letter-spacing: 0.04em;">FEATURED · {{ featured.cat }}</span>
+        <h2 style="font-size: 46px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.1; margin: 18px 0 18px; max-width: 720px;">{{ featured.title }}</h2>
+        <p style="font-size: 20px; line-height: 1.55; color: #a1a1a6; max-width: 640px; margin-bottom: 28px;">{{ featured.lead }}</p>
+        <div style="display: flex; align-items: center; gap: 16px; font-size: 15px; color: #86868b;">
+          <span>{{ featured.date }}</span><span>·</span><span>{{ featured.read }}</span><span style="color: #2997ff; margin-left: 6px;">閱讀全文 ›</span>
+        </div>
+      </div>
+    </section>
+    </sc-if>
+
+    <!-- List -->
+    <section style="padding: 0 22px 110px;">
+      <div style="max-width: 820px; margin: 0 auto; display: flex; flex-direction: column;">
+        <sc-for list="{{ listed }}" as="a" hint-placeholder-count="4">
+          <div onClick="{{ a.onOpen }}" style="display: flex; align-items: baseline; justify-content: space-between; gap: 28px; padding: 30px 6px; border-top: 1px solid #ececef; cursor: pointer;" style-hover="background: #fbfbfd;">
+            <div style="flex: 1;">
+              <div style="display: flex; gap: 14px; align-items: center; margin-bottom: 10px;">
+                <span style="font-size: 13px; font-weight: 600; color: {{ accent }};">{{ a.cat }}</span>
+                <span style="font-size: 13px; color: #86868b;">{{ a.date }}</span>
+                <span style="font-size: 13px; color: #86868b;">· {{ a.read }}</span>
+              </div>
+              <h3 style="font-size: 26px; font-weight: 600; letter-spacing: -0.015em; margin-bottom: 10px; line-height: 1.25;">{{ a.title }}</h3>
+              <p style="font-size: 17px; line-height: 1.6; color: #6e6e73;">{{ a.lead }}</p>
+            </div>
+            <span style="font-size: 24px; color: #c7c7cc; align-self: center;">›</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ===================== ARTICLE VIEW ===================== -->
+  <sc-if value="{{ isArticle }}" hint-placeholder-val="{{ true }}">
+  <div>
+    <article style="max-width: 720px; margin: 0 auto; padding: 70px 22px 40px;">
+      <span onClick="{{ goHome }}" style="display: inline-block; font-size: 16px; color: {{ accent }}; cursor: pointer; margin-bottom: 40px;">‹ 所有文章</span>
+      <div style="display: flex; gap: 14px; align-items: center; margin-bottom: 20px;">
+        <span style="font-size: 14px; font-weight: 600; color: {{ accent }};">{{ current.cat }}</span>
+        <span style="font-size: 14px; color: #86868b;">{{ current.date }}</span>
+        <span style="font-size: 14px; color: #86868b;">· {{ current.read }}</span>
+      </div>
+      <h1 style="font-size: 52px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 24px;">{{ current.title }}</h1>
+      <p style="font-size: 23px; line-height: 1.55; color: #515154; margin-bottom: 12px; font-weight: 400;">{{ current.lead }}</p>
+      <sc-if value="{{ current.hasUpdated }}" hint-placeholder-val="{{ true }}"><p style="font-size: 14px; color: #86868b; margin: 8px 0 0;">最後更新 · {{ current.updated }}</p></sc-if>
+    </article>
+
+    <div style="max-width: 720px; margin: 0 auto; padding: 0 22px 40px;">
+      <div style="border-top: 1px solid #ececef; padding-top: 44px;">
+        <sc-for list="{{ current.body }}" as="b" hint-placeholder-count="6">
+          <sc-if value="{{ b.isH }}" hint-placeholder-val="{{ true }}"><h2 style="font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 44px 0 18px; line-height: 1.25;">{{ b.text }}</h2></sc-if>
+          <sc-if value="{{ b.isP }}" hint-placeholder-val="{{ true }}"><p style="font-size: 19px; line-height: 1.75; color: #1d1d1f; margin-bottom: 22px;">{{ b.text }}</p></sc-if>
+          <sc-if value="{{ b.isCode }}" hint-placeholder-val="{{ true }}"><pre style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 15px; line-height: 1.6; background: #1d1d1f; color: #f5f5f7; padding: 22px 24px; border-radius: 14px; overflow-x: auto; margin-bottom: 26px; letter-spacing: 0;">{{ b.text }}</pre></sc-if>
+          <sc-if value="{{ b.isQuote }}" hint-placeholder-val="{{ true }}"><blockquote style="font-size: 26px; font-weight: 500; line-height: 1.4; letter-spacing: -0.015em; color: #1d1d1f; border-left: 4px solid {{ accent }}; padding: 6px 0 6px 26px; margin: 36px 0;">{{ b.text }}</blockquote></sc-if>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- author + next -->
+    <div style="max-width: 720px; margin: 0 auto; padding: 30px 22px 0;">
+      <div style="display: flex; align-items: center; gap: 16px; padding: 28px 0; border-top: 1px solid #ececef; border-bottom: 1px solid #ececef;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg,{{ accent }},#5e9eff); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px; font-weight: 600;">暐</div>
+        <div><div style="font-size: 17px; font-weight: 600;">陳暐霖 · Wei-Lin Chen</div><div style="font-size: 15px; color: #86868b;">國立高雄科技大學 運籌管理系 · 後端與自動化</div></div>
+      </div>
+    </div>
+    <section style="max-width: 720px; margin: 0 auto; padding: 40px 22px 110px;">
+      <p style="font-size: 14px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: #86868b; margin-bottom: 16px;">下一篇</p>
+      <div onClick="{{ nextArticle.onOpen }}" style="background: #f5f5f7; border-radius: 20px; padding: 32px 34px; cursor: pointer;" style-hover="background: #efeff1;">
+        <span style="font-size: 13px; font-weight: 600; color: {{ accent }};">{{ nextArticle.cat }}</span>
+        <h3 style="font-size: 26px; font-weight: 600; letter-spacing: -0.015em; margin: 10px 0 8px; line-height: 1.25;">{{ nextArticle.title }}</h3>
+        <p style="font-size: 16px; line-height: 1.6; color: #6e6e73;">{{ nextArticle.lead }}</p>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- FOOTER -->
+  <footer id="contact" style="background: #f5f5f7; padding: 40px 22px; border-top: 1px solid #e2e2e6;">
+    <div style="max-width: 980px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+      <p style="font-size: 13px; color: #86868b;">陳暐霖 · Wei-Lin Chen — 正在尋找後端 / 自動化職缺</p>
+      <div style="display: flex; gap: 22px;">
+        <a href="mailto:willima039@gmail.com" style="font-size: 13px; color: {{ accent }}; text-decoration: none;">Email ›</a>
+        <a href="https://github.com/William0311" target="_blank" rel="noopener" style="font-size: 13px; color: {{ accent }}; text-decoration: none;">GitHub ›</a>
+        <a href="index.html" style="font-size: 13px; color: {{ accent }}; text-decoration: none;">作品集 ›</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#0071e3&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { view: 'list', id: 0, filter: '全部' };
+
+  open(i) {
+    this.setState({ view: 'article', id: i }, () => { try { window.scrollTo(0, 0); } catch (e) {} });
+  }
+  goHome() {
+    this.setState({ view: 'list' }, () => { try { window.scrollTo(0, 0); } catch (e) {} });
+  }
+  pick(f) { this.setState({ filter: f }); }
+
+  rawArticles() {
+    // Articles come from articles.json (injected by blog_server.js as window.__BLOG_ARTICLES__).
+    // Falls back to the inline defaults below so the file still works when opened directly.
+    try { if (window.__BLOG_ARTICLES__ && window.__BLOG_ARTICLES__.length) return window.__BLOG_ARTICLES__; } catch (e) {}
+    return [
+      {
+        cat: 'AI Agent', date: '2025 · 06', read: '6 分鐘',
+        title: '我如何用 Agent 把專案管理自動化',
+        lead: '從手動分派任務,到讓 Agent 讀懂需求、自動拆解並指派工作 —— 這是我在 Mars 專案裡的實作筆記。',
+        body: [
+          { t: 'h', x: '問題:會議結束後,沒人想分派任務' },
+          { t: 'p', x: '在 Mars 專案管理系統的早期版本,每一個任務都要有人手動建立、填寫負責人與截止日。會議一結束,大家就各自散去,真正把待辦項目整理進系統的往往只剩下我。重複、瑣碎,而且很容易漏掉。' },
+          { t: 'p', x: '於是我開始想:如果有一個 Agent 能直接讀懂我們的會議記錄,自動把該做的事整理出來呢?' },
+          { t: 'h', x: '把需求丟給 Agent' },
+          { t: 'p', x: '我用 Claude 的 function calling,定義了一個建立任務的工具,再把會議記錄整段丟給它。Agent 要做的不是聊天,而是輸出一份結構化的任務清單。' },
+          { t: 'code', x: 'tasks = agent.run(meeting_notes)\n# → [{ "title": "修正登入流程",\n#      "owner": "暐霖",\n#      "due": "2025-06-30" }, ...]' },
+          { t: 'p', x: '它會判斷哪些句子代表一個待辦、誰比較適合負責,甚至從「下週前」這種模糊說法推算出日期。產出的清單再經過我快速確認,就能直接寫進資料庫。' },
+          { t: 'h', x: '讓它真的去做事' },
+          { t: 'p', x: '光是產生任務還不夠。我把 Agent 接上系統的通知模組,任務一建立就自動發訊息給負責人,並在截止前提醒。人要做的,只剩下「決定」與「執行」。' },
+          { t: 'quote', x: '自動化不是取代判斷,而是把判斷留給真正需要的地方。' },
+          { t: 'h', x: '學到的事' },
+          { t: 'p', x: 'Agent 很擅長處理「結構化的重複」,但邊界要由人來畫。把它能做與不該做的事分清楚,系統才會穩。這個專案讓我相信,未來的後端工程師,有一大部分工作會是設計人與 Agent 的協作流程。' },
+        ],
+      },
+      {
+        cat: '工程習慣', date: '2025 · 05', read: '5 分鐘',
+        title: '「修好了」之前,我學會先跑一次驗證',
+        lead: '在 Mars 開發裡最深的一課:沒有實際跑過,就不能說「修好了」—— 包括 AI 幫我寫的那些。',
+        body: [
+          { t: 'h', x: '一句「應該好了」的代價' },
+          { t: 'p', x: '開發 Mars 的過程中,我曾經改完一段邏輯,看著程式碼覺得「這樣應該對了」,就回報修好了。結果隔天問題照樣出現 —— 我改的根本不是真正在跑的那一段。從那次之後,我給自己定了一條規矩:沒有實際跑過、親眼看到預期的結果,就不准說「修好了」。' },
+          { t: 'h', x: 'AI 說做完,不等於真的做完' },
+          { t: 'p', x: '後來我大量用 AI 來幫忙寫程式。它很會給你一段「看起來完成了」的回覆,但「它說做完」和「真的做完」是兩件事。我學會每一次都自己去看實際改了什麼、把服務真的叫起來、用一個真實的請求驗證行為,而不是相信那句總結。' },
+          { t: 'code', x: '# 改完之後,我一定做這三件事\n1. 看實際改了什麼(diff)\n2. 把服務真的跑起來\n3. 用一個真實請求,確認行為符合預期' },
+          { t: 'p', x: '這個習慣讓我多花幾分鐘,卻幫我擋掉無數次「在我電腦上明明可以」。' },
+          { t: 'quote', x: '證據先於宣稱。沒有輸出,就只是一個願望。' },
+          { t: 'h', x: '為什麼這件小事值得寫下來' },
+          { t: 'p', x: '因為它無關技術深淺,而是一種態度。當系統越來越大、越來越多人依賴它,「我以為修好了」造成的成本會被一路放大。先驗證,是我目前找到最便宜的保險。' },
+        ],
+      },
+      {
+        cat: 'Vibe Coding', date: '2025 · 04', read: '5 分鐘',
+        title: 'Vibe coding 一週,做出一個能用的後端',
+        lead: '用 Codex 與 Claude 協作開發的流程、踩過的坑,以及哪些事還是得自己想清楚。',
+        body: [
+          { t: 'h', x: '先說結論' },
+          { t: 'p', x: '一週的時間,我用 Vibe coding 的方式做出了一個能跑、能部署、有測試的後端服務。速度遠超我自己手刻,但前提是:我得清楚知道自己要什麼。' },
+          { t: 'h', x: '我的流程' },
+          { t: 'p', x: '我習慣先用文字把需求與資料模型寫清楚,再讓 Codex 幫我生出骨架,接著用 Claude 來討論架構決策、重構與除錯。AI 負責打字,我負責決定方向。' },
+          { t: 'code', x: '# 我給的不是「寫個 API」\n# 而是這樣的脈絡:\n- 資料表:user, project, task\n- task 屬於 project,project 有多個成員\n- 需要分頁與權限檢查' },
+          { t: 'p', x: '脈絡給得越清楚,產出的程式碼越接近可用。模糊的需求只會換來模糊的程式。' },
+          { t: 'h', x: '踩到的坑' },
+          { t: 'p', x: '最大的坑是「看起來對」的程式。AI 產出的程式碼常常能跑,卻在邊界情況出錯。我學會不全盤接受,而是把每段邏輯讀過一遍,再補上自己的測試。' },
+          { t: 'quote', x: 'AI 讓我更快,但沒讓我更不用懂。它放大的是判斷力,不是無知。' },
+          { t: 'h', x: '還是得自己想的事' },
+          { t: 'p', x: '架構怎麼切、資料怎麼建模、什麼時候該停下來重構 —— 這些需要經驗與品味的判斷,目前還是得由人來下。Vibe coding 把我從打字裡解放出來,讓我有更多時間思考這些真正重要的問題。' },
+        ],
+      },
+      {
+        cat: '後端', date: '2025 · 03', read: '6 分鐘',
+        title: '一個 00:00 引發的 bug:我重新理解了「儲存」與「顯示」',
+        lead: '使用者明明在下午上傳,系統卻顯示早上八點。一個只存了日期、沒存時間的欄位,讓我上了一堂時區課。',
+        body: [
+          { t: 'h', x: '「為什麼全部都顯示早上八點?」' },
+          { t: 'p', x: 'Mars 裡有一個會記錄某件事發生日期的功能。有天我發現,一批資料的時間全部顯示成早上 08:00 —— 一個沒有人選過的時間。一開始我以為是顯示端的小問題,翻了很久才發現,根源在更上游。' },
+          { t: 'h', x: '只存日期的陷阱' },
+          { t: 'p', x: '那個欄位只記了「日期」,沒有「時間」。當系統把它存進資料庫時,等於自動補上了「當天的午夜零點」。而這個零點,是用 UTC(世界協調時間)算的。' },
+          { t: 'code', x: '# 實際存進去的是\n2025-03-10T00:00:00Z   # UTC 的午夜\n# 台北是 UTC+8,顯示時就變成\n2025-03-10 08:00       # 早上八點' },
+          { t: 'p', x: '台北比 UTC 快八小時,於是 UTC 的午夜零點,到了使用者眼前就成了早上八點。資料本身沒錯,錯的是我沒想清楚:存的到底是「哪個時區的哪個時刻」。' },
+          { t: 'h', x: '修法與原則' },
+          { t: 'p', x: '我把「只有日期」這種情況獨立出來處理,讓它保留日期、採用合理的當地時間,而不是預設那個會誤導人的午夜零點。從那之後,面對任何時間欄位,我都會多問一句:這是哪個時區?它是某個精確的瞬間,還是只是一整天?' },
+          { t: 'quote', x: '時間從來不只是數字,它總是綁著一個你沒注意到的時區。' },
+          { t: 'h', x: '學到的事' },
+          { t: 'p', x: '這類 bug 的可怕在於「資料看起來完全正常」,只是顯示得不對,很難一眼看出。它教會我:儲存與顯示是兩件要分開想清楚的事,而中間那層轉換,往往才是最容易出錯的地方。' },
+        ],
+      },
+      {
+        cat: '後端', date: '2025 · 02', read: '7 分鐘',
+        title: 'FastAPI 從零到上線的踩雷紀錄',
+        lead: '專案結構、非同步、資料庫遷移與部署 —— 新手最容易卡住的幾個地方。',
+        body: [
+          { t: 'h', x: '為什麼選 FastAPI' },
+          { t: 'p', x: '型別提示、自動產生的 API 文件、原生的非同步支援,還有夠快的效能。對一個剛要把運籌管理背景轉向後端的人來說,它的學習曲線剛剛好。' },
+          { t: 'h', x: '專案結構別偷懶' },
+          { t: 'p', x: '一開始我把所有東西塞在一個檔案裡,等到功能變多就一團亂。後來我把路由、資料模型、商業邏輯與資料庫存取分層,維護起來輕鬆太多。' },
+          { t: 'code', x: 'app/\n├─ routers/    # API 路由\n├─ models/     # 資料模型\n├─ services/   # 商業邏輯\n└─ db.py       # 連線設定' },
+          { t: 'h', x: '非同步不是萬靈丹' },
+          { t: 'p', x: '我曾經以為把所有函式都加上 async 就會變快。事實是:如果底層的資料庫呼叫是同步的,async 反而會擋住整個事件迴圈。要快,整條路徑都得是非同步的。' },
+          { t: 'h', x: '資料庫遷移' },
+          { t: 'p', x: '用 Alembic 管理 schema 變更,讓每一次資料表的調整都有紀錄、可回溯。這件事在開發初期感覺多餘,上線後卻救了我好幾次。' },
+          { t: 'quote', x: '上線前覺得麻煩的工程習慣,上線後都會變成你的保險。' },
+          { t: 'h', x: '部署' },
+          { t: 'p', x: '我用 Docker 把環境打包,推到 Zeabur 上跑。把設定都放進環境變數、用健康檢查確認服務存活,從本機到正式環境就不再有「在我電腦上明明可以」的問題。' },
+        ],
+      },
+      {
+        cat: '後端', date: '2025 · 01', read: '5 分鐘',
+        title: '寫程式前,先跟現實對齊',
+        lead: '我踩過最多的雷,都不是程式寫錯,而是「我以為的資料結構」跟它真正的樣子不一樣。',
+        body: [
+          { t: 'h', x: '假設,是最貴的東西' },
+          { t: 'p', x: '在 Mars 這種已經跑了一段時間的系統上開發,最容易出事的不是「不會寫」,而是「想當然耳」。我曾經照著腦中以為的資料結構動手,寫到一半才發現真實的限制跟我想的不一樣 —— 接著就是好幾個小時的回頭重做。' },
+          { t: 'h', x: '三十秒的查證,省下三小時的回填' },
+          { t: 'p', x: '後來我養成一個習慣:動工之前,先花三十秒去確認資料真正長什麼樣 —— 有哪些欄位、有哪些限制、改動一處會不會牽動別的地方。這三十秒,救過我太多次。' },
+          { t: 'code', x: '# 動手前先問清楚\n- 這裡真正有哪些欄位?\n- 有哪些限制(不能重複、不能空白)?\n- 改了它,會影響到誰?' },
+          { t: 'p', x: '我把它寫成自己的規矩:先把要改的範圍、會碰到的資料、以及「怎樣才算做對了」寫清楚,再開始動程式。需求對齊了現實,程式才不會蓋在沙子上。' },
+          { t: 'quote', x: '大多數的 bug,不是寫錯了,而是一開始就理解錯了。' },
+          { t: 'h', x: '它改變了我寫程式的順序' },
+          { t: 'p', x: '以前我急著打開編輯器,現在我會先花時間搞懂現況。聽起來變慢,實際上快很多 —— 因為我不再需要把寫到一半的東西整個拆掉重來。' },
+        ],
+      },
+      {
+        cat: '前端', date: '2024 · 12', read: '5 分鐘',
+        title: '兩個讓我找很久的 CSS 幽靈 bug',
+        lead: '程式碼看起來完全正確,畫面就是不對。sticky 不吸頂、彈出層跑到旁邊 —— 兩個關於「定位」的教訓。',
+        body: [
+          { t: 'h', x: '幽靈一:sticky 怎麼貼都不吸頂' },
+          { t: 'p', x: '我想讓一塊區域在捲動時固定在頂端,寫了 position: sticky,卻完全沒反應。檢查了好幾遍,語法明明都對。後來才知道:當 sticky 直接套在 grid 或 flex 的「直接子項目」上時,常常會失效。' },
+          { t: 'p', x: '解法很簡單卻反直覺 —— 在外面多包一層,讓 sticky 套在「那一層的普通子元素」上,它就乖乖吸頂了。' },
+          { t: 'code', x: '<!-- 失效:sticky 直接放在 grid item 上 -->\n<div class="grid-item" style="position:sticky">…</div>\n\n<!-- 有效:多包一層,sticky 放在子元素 -->\n<div class="grid-item">\n  <div style="position:sticky">…</div>\n</div>' },
+          { t: 'h', x: '幽靈二:彈出層跑到畫面旁邊' },
+          { t: 'p', x: '另一個 bug 是一個下拉選單,在某些彈窗裡會跑到右邊、甚至被裁掉。元件本身沒問題,因為換個地方用就正常。' },
+          { t: 'p', x: '真相是:當一個祖先元素用了 transform(例如置中用的位移),它裡面的 position: fixed 就不再以整個畫面為基準,而是改以那個祖先為基準。於是用畫面座標算出來的位置,全錯了。' },
+          { t: 'p', x: '解法是把彈出層直接「傳送」到頁面的最外層,讓它脫離那個會干擾它的祖先。而且只要修那一個共用元件,所有用到它的地方就一起好了。' },
+          { t: 'quote', x: 'CSS 沒有魔法。當它看起來不講道理,通常是某個你沒注意到的規則正在生效。' },
+          { t: 'h', x: '學到的事' },
+          { t: 'p', x: '這兩個 bug 都不是打錯字,而是我對「定位的基準到底是誰」理解得不夠深。前端的很多坑,都藏在這種「看不見的上下文」裡。遇到「程式明明對、卻沒效果」時,我學會先回頭確認:這段樣式真正的參考座標,究竟是誰?' },
+        ],
+      },
+      {
+        cat: '自動化', date: '2024 · 11', read: '4 分鐘',
+        title: '用 n8n 串起每天的瑣碎工作',
+        lead: '把抓資料、整理、通知這些重複動作交給流程引擎,省下的時間拿去學新東西。',
+        body: [
+          { t: 'h', x: '從一個很煩的日常開始' },
+          { t: 'p', x: '每天早上,我要從幾個來源把數據抓下來、整理成報表、再貼到群組裡。一次大概 15 分鐘,但天天做就是一種消耗。' },
+          { t: 'h', x: '為什麼是 n8n' },
+          { t: 'p', x: '它是視覺化的流程引擎,把「觸發 → 取資料 → 處理 → 通知」串成一條看得見的流水線。不用為了自動化再養一台伺服器、寫一堆樣板程式。' },
+          { t: 'code', x: 'Cron (每天 08:00)\n  → HTTP 抓資料\n  → Function 整理格式\n  → 發送到通訊軟體' },
+          { t: 'h', x: '結果' },
+          { t: 'p', x: '原本每天 15 分鐘的手動作業降到零,而且再也不會忘記或出錯。更重要的是,我把這套思維套用到其他工作上 —— 只要是重複的,就值得問一句:這能不能自動化?' },
+          { t: 'quote', x: '省下的不只是時間,而是把注意力留給只有人能做的事。' },
+        ],
+      },
+    ];
+  }
+
+  renderVals() {
+    const accent = this.props.accent ?? '#0071e3';
+    const all = this.rawArticles().map((a, i) => ({
+      ...a,
+      onOpen: () => this.open(i),
+      body: a.body.map(b => ({ text: b.x, isH: b.t === 'h', isP: b.t === 'p', isCode: b.t === 'code', isQuote: b.t === 'quote' })),
+      hasUpdated: !!a.updated,
+    }));
+
+    const cats = ['全部', ...Array.from(new Set(all.map(a => a.cat)))];
+    const filter = this.state.filter;
+    const filters = cats.map(c => {
+      const on = c === filter;
+      return {
+        label: c, onPick: () => this.pick(c),
+        bg: on ? '#1d1d1f' : '#fff',
+        color: on ? '#fff' : '#1d1d1f',
+        border: on ? '#1d1d1f' : '#d2d2d7',
+      };
+    });
+
+    const listedAll = filter === '全部' ? all : all.filter(a => a.cat === filter);
+    const showFeatured = filter === '全部';
+    const featured = all[0];
+    const listed = showFeatured ? listedAll.slice(1) : listedAll;
+
+    const current = all[this.state.id] || all[0];
+    const nextArticle = all[(this.state.id + 1) % all.length];
+
+    return {
+      accent,
+      isList: this.state.view === 'list',
+      isArticle: this.state.view === 'article',
+      filters, listed, showFeatured, featured,
+      current, nextArticle,
+      goHome: () => this.goHome(),
+    };
+  }
+}
+</script>
+</body>
+</html>

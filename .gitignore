@@ -1,0 +1,11 @@
+# local-only dev tools (need a backend — not part of the static site)
+admin.html
+blog_server.js
+
+# local verification artifacts / junk
+_verify_shots/
+*.bak
+.thumbnail
+
+# internal notes
+DEPLOY-SPEC.md
