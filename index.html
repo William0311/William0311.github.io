@@ -178,7 +178,36 @@
         <h3 style="font-size: 40px; font-weight: 700; letter-spacing: -0.025em; text-align: center; line-height: 1.15; margin-bottom: 14px;">我在真實產品上,做到 Agentic 的哪一階?</h3>
         <p style="font-size: 20px; line-height: 1.6; color: #6e6e73; text-align: center; max-width: 680px; margin: 0 auto;">我用「單次生成 → Chain 串接 → 工具使用」這三階,誠實盤點自己走到哪、又還缺什麼。</p>
 
-        <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 48px;">
+        <!-- capability staircase diagram -->
+        <div style="background: #fff; border: 1px solid #ececef; border-radius: 22px; padding: 30px 26px 22px; margin-top: 44px;">
+          <svg viewBox="0 0 880 400" width="100%" role="img" aria-label="Agentic 三階能力階梯:階段一單次生成(我的主力,六個應用)與階段二 Chain 串接(兩個應用)已達成;階段三工具使用(兩個應用,進行中)是我正在往上爬的一階。越往右,AI 的自主性越高。" style="display: block; max-width: 100%; height: auto;">
+            <g font-family="-apple-system, BlinkMacSystemFont, 'Noto Sans TC', sans-serif">
+              <line x1="46" y1="343" x2="768" y2="343" stroke="#e6e6ea" stroke-width="2"/>
+              <!-- tier 1 -->
+              <rect x="66" y="232" width="200" height="111" rx="14" fill="#dcebfb"/>
+              <rect x="66" y="232" width="200" height="111" rx="14" fill="#deecfc"/>
+              <text x="88" y="264" font-size="15" font-weight="700" fill="#0071e3">階段 01</text>
+              <text x="88" y="292" font-size="23" font-weight="700" fill="#1d1d1f">單次生成</text>
+              <text x="88" y="318" font-size="14" fill="#54657a">我的主力 · 6 個應用</text>
+              <g transform="translate(238,254)"><circle r="13" fill="#0071e3"/><path d="M-5.5 0l3.8 3.8L6.2 -4.4" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></g>
+              <!-- tier 2 -->
+              <rect x="306" y="162" width="200" height="181" rx="14" fill="#bcd8f8"/>
+              <text x="328" y="194" font-size="15" font-weight="700" fill="#005bbf">階段 02</text>
+              <text x="328" y="222" font-size="23" font-weight="700" fill="#12263a">Chain 串接</text>
+              <text x="328" y="248" font-size="14" fill="#2f4759">多步流程 · 2 個</text>
+              <g transform="translate(478,184)"><circle r="13" fill="#0071e3"/><path d="M-5.5 0l3.8 3.8L6.2 -4.4" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></g>
+              <!-- tier 3 (in progress) -->
+              <rect x="546" y="92" width="200" height="251" rx="14" fill="#fbfbfd" stroke="#b7c2cd" stroke-width="2" stroke-dasharray="7 6"/>
+              <text x="568" y="152" font-size="15" font-weight="700" fill="#86868b">階段 03</text>
+              <text x="568" y="180" font-size="23" font-weight="700" fill="#1d1d1f">工具使用</text>
+              <text x="568" y="206" font-size="14" fill="#86868b">進行中 · 2 個</text>
+              <text x="646" y="70" font-size="14.5" font-weight="600" fill="#0071e3" text-anchor="middle">▲ 我在這裡，正往上爬</text>
+              <text x="407" y="386" font-size="13" fill="#a1a1a6" text-anchor="middle">越往右，AI 的自主性越高 →</text>
+            </g>
+          </svg>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 24px;">
           <sc-for list="{{ aiTiers }}" as="t" hint-placeholder-count="3">
           <div style="background: #fff; border: {{ t.borderStyle }}; border-radius: 22px; padding: 34px 32px;">
             <div style="display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 8px;">
@@ -204,6 +233,40 @@
             </div>
           </div>
           </sc-for>
+        </div>
+
+        <!-- tier-1 convergence funnel -->
+        <div style="background: #fff; border: 1px solid #ececef; border-radius: 22px; padding: 32px 28px 24px; margin-top: 20px;">
+          <p style="font-size: 13px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: #86868b; margin-bottom: 4px;">放大第一階</p>
+          <h4 style="font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 24px;">難的不是生成,是把六種雜亂輸入收斂成一種結構</h4>
+          <svg viewBox="0 0 880 300" width="100%" role="img" aria-label="收斂示意:會議記錄、逐字稿、Excel 班表、雜亂工時、專案目標、自由文字例外等六種雜亂輸入,經過 AI 收斂整理(強制結構化輸出),變成一份系統吃得下的結構化資料 schema。" style="display: block; max-width: 100%; height: auto;">
+            <g font-family="-apple-system, BlinkMacSystemFont, 'Noto Sans TC', sans-serif">
+              <g stroke="#cbd5df" stroke-width="1.6" fill="none">
+                <path d="M214 33 L512 150"/>
+                <path d="M214 77 L512 150"/>
+                <path d="M214 121 L512 150"/>
+                <path d="M214 165 L512 150"/>
+                <path d="M214 209 L512 150"/>
+                <path d="M214 253 L512 150"/>
+              </g>
+              <g>
+                <rect x="34" y="16" width="180" height="34" rx="17" fill="#f5f5f7"/><text x="124" y="38" font-size="14.5" fill="#3a4553" text-anchor="middle">會議記錄</text>
+                <rect x="34" y="60" width="180" height="34" rx="17" fill="#f5f5f7"/><text x="124" y="82" font-size="14.5" fill="#3a4553" text-anchor="middle">逐字稿</text>
+                <rect x="34" y="104" width="180" height="34" rx="17" fill="#f5f5f7"/><text x="124" y="126" font-size="14.5" fill="#3a4553" text-anchor="middle">Excel 班表</text>
+                <rect x="34" y="148" width="180" height="34" rx="17" fill="#f5f5f7"/><text x="124" y="170" font-size="14.5" fill="#3a4553" text-anchor="middle">雜亂工時</text>
+                <rect x="34" y="192" width="180" height="34" rx="17" fill="#f5f5f7"/><text x="124" y="214" font-size="14.5" fill="#3a4553" text-anchor="middle">專案目標</text>
+                <rect x="34" y="236" width="180" height="34" rx="17" fill="#f5f5f7"/><text x="124" y="258" font-size="14.5" fill="#3a4553" text-anchor="middle">自由文字例外</text>
+              </g>
+              <rect x="512" y="120" width="150" height="60" rx="16" fill="#0071e3"/>
+              <text x="587" y="147" font-size="15.5" font-weight="700" fill="#ffffff" text-anchor="middle">AI 收斂整理</text>
+              <text x="587" y="167" font-size="11.5" fill="#cfe3fb" text-anchor="middle">structured output</text>
+              <path d="M662 150 L700 150" stroke="#0071e3" stroke-width="2.4" fill="none"/>
+              <path d="M698 144 L710 150 L698 156 Z" fill="#0071e3"/>
+              <rect x="712" y="120" width="150" height="60" rx="16" fill="#e7f5ee" stroke="#1d9e5b" stroke-width="1.6"/>
+              <text x="787" y="147" font-size="15.5" font-weight="700" fill="#127a44" text-anchor="middle">結構化資料</text>
+              <text x="787" y="167" font-size="11.5" fill="#3a7d5a" text-anchor="middle">system schema ✓</text>
+            </g>
+          </svg>
         </div>
 
         <!-- self-positioning -->
