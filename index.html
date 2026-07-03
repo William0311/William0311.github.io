@@ -171,6 +171,83 @@
       </div>
     </section>
 
+    <!-- AI capability inventory: Agentic three tiers -->
+    <section style="padding: 64px 22px 24px; background: #fbfbfd;">
+      <div style="max-width: 960px; margin: 0 auto;">
+        <p style="font-size: 14px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #86868b; text-align: center; margin-bottom: 16px;">AI 能力盤點</p>
+        <h3 style="font-size: 40px; font-weight: 700; letter-spacing: -0.025em; text-align: center; line-height: 1.15; margin-bottom: 14px;">我在真實產品上,做到 Agentic 的哪一階?</h3>
+        <p style="font-size: 20px; line-height: 1.6; color: #6e6e73; text-align: center; max-width: 680px; margin: 0 auto;">我用「單次生成 → Chain 串接 → 工具使用」這三階,誠實盤點自己走到哪、又還缺什麼。</p>
+
+        <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 48px;">
+          <sc-for list="{{ aiTiers }}" as="t" hint-placeholder-count="3">
+          <div style="background: #fff; border: {{ t.borderStyle }}; border-radius: 22px; padding: 34px 32px;">
+            <div style="display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 8px;">
+              <span style="font-size: 15px; font-weight: 700; color: {{ t.accentColor }}; letter-spacing: 0.04em;">階段 {{ t.n }}</span>
+              <h4 style="font-size: 26px; font-weight: 700; letter-spacing: -0.02em;">{{ t.name }}</h4>
+              <span style="font-size: 12px; font-weight: 600; color: {{ t.tagColor }}; background: {{ t.tagBg }}; padding: 4px 12px; border-radius: 980px;">{{ t.tag }}</span>
+            </div>
+            <p style="font-size: 16px; line-height: 1.6; color: #6e6e73; margin-bottom: 20px;">{{ t.desc }}</p>
+            <div style="display: flex; flex-direction: column;">
+              <sc-for list="{{ t.apps }}" as="a" hint-placeholder-count="6">
+              <div style="padding: 14px 0; border-top: 1px solid #f0f0f2;">
+                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                  <span style="font-size: 17px; font-weight: 600; color: #1d1d1f;">{{ a.name }}</span>
+                  <span style="font-size: 12px; font-weight: 600; color: #86868b; background: #f5f5f7; padding: 2px 9px; border-radius: 980px;">{{ a.sys }}</span>
+                </div>
+                <p style="font-size: 15px; line-height: 1.55; color: #6e6e73; margin-top: 5px;">{{ a.prob }}</p>
+              </div>
+              </sc-for>
+            </div>
+            <div style="display: flex; gap: 12px; margin-top: 20px; padding: 16px 18px; background: {{ t.learnBg }}; border-radius: 14px;">
+              <span style="font-size: 13px; font-weight: 700; color: {{ t.accentColor }}; flex-shrink: 0;">我學到的</span>
+              <p style="font-size: 15px; line-height: 1.6; color: #1d1d1f;">{{ t.learn }}</p>
+            </div>
+          </div>
+          </sc-for>
+        </div>
+
+        <!-- self-positioning -->
+        <div style="margin-top: 40px; background: #000; color: #f5f5f7; border-radius: 24px; padding: 52px 40px; text-align: center;">
+          <p style="font-size: 14px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #86868b; margin-bottom: 20px;">我目前的定位</p>
+          <p style="font-size: 26px; line-height: 1.5; font-weight: 500; letter-spacing: -0.015em; max-width: 760px; margin: 0 auto;">我在真實 SaaS 上落地了一整排 AI 生成功能<span style="color: #86868b;">(第一階)</span>、設計過人類把關的多階段流程<span style="color: #86868b;">(第二階)</span>,現在正把它們往 tool-use agent 推進<span style="color: #86868b;">(第三階起步)</span>。我最有價值的,不是「會 call API」,而是我能在真實營運資料裡,把每一個功能磨到上得了 production。</p>
+        </div>
+
+        <!-- glossary -->
+        <details style="margin-top: 24px; background: #fff; border: 1px solid #ececef; border-radius: 16px; padding: 4px 26px;">
+          <summary style="cursor: pointer; font-size: 16px; font-weight: 600; color: #1d1d1f; padding: 20px 0;">我用到的概念與詞彙表</summary>
+          <div style="padding: 6px 0 26px;">
+            <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.04em; color: {{ accent }}; margin: 14px 0 10px;">概念類(AI 應用層級)</p>
+            <p style="font-size: 16px; line-height: 1.75; color: #515154; margin-bottom: 4px;"><strong style="color:#1d1d1f;">Agentic / AI Agent</strong> — 有目標、會迴圈(規劃→動手→看結果→再決定→自我修正)的 AI,而非一問一答。</p>
+            <p style="font-size: 16px; line-height: 1.75; color: #515154; margin-bottom: 4px;"><strong style="color:#1d1d1f;">單次生成(single-shot)</strong> — 一個 prompt 一份結果,第一階。</p>
+            <p style="font-size: 16px; line-height: 1.75; color: #515154; margin-bottom: 4px;"><strong style="color:#1d1d1f;">Chain(串接)</strong> — 前一步的輸出當後一步的輸入。</p>
+            <p style="font-size: 16px; line-height: 1.75; color: #515154; margin-bottom: 4px;"><strong style="color:#1d1d1f;">Tool use / Function calling</strong> — 讓模型自己決定去查資料、建任務等外部動作。</p>
+            <p style="font-size: 16px; line-height: 1.75; color: #515154; margin-bottom: 4px;"><strong style="color:#1d1d1f;">ReAct pattern</strong> — agent 的標準迴圈:推理(Reason)+行動(Act)交替。</p>
+            <p style="font-size: 16px; line-height: 1.75; color: #515154; margin-bottom: 4px;"><strong style="color:#1d1d1f;">Human-in-the-loop</strong> — 關鍵節點卡住,等人審核才放行。</p>
+
+            <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.04em; color: {{ accent }}; margin: 22px 0 10px;">資料與可信度類</p>
+            <p style="font-size: 16px; line-height: 1.75; color: #515154; margin-bottom: 4px;"><strong style="color:#1d1d1f;">RAG(檢索增強生成)</strong> — 生成前先撈真實資料當根據,降低幻覺。</p>
+            <p style="font-size: 16px; line-height: 1.75; color: #515154; margin-bottom: 4px;"><strong style="color:#1d1d1f;">pg_trgm vs pgvector</strong> — 關鍵字搜尋 vs 語意向量搜尋;有邊界的資料常常 pg_trgm 就夠,不必為潮而上向量。</p>
+            <p style="font-size: 16px; line-height: 1.75; color: #515154; margin-bottom: 4px;"><strong style="color:#1d1d1f;">Hybrid search</strong> — 先用結構化條件 filter 縮小範圍,再排序。</p>
+            <p style="font-size: 16px; line-height: 1.75; color: #515154; margin-bottom: 4px;"><strong style="color:#1d1d1f;">Structured output</strong> — 強制模型吐 schema 而非自由文字。</p>
+            <p style="font-size: 16px; line-height: 1.75; color: #515154; margin-bottom: 4px;"><strong style="color:#1d1d1f;">Eval(評估)</strong> — 不靠人眼判斷輸出對不對,可從 schema 驗證 + 硬斷言先做起。</p>
+            <p style="font-size: 16px; line-height: 1.75; color: #515154; margin-bottom: 4px;"><strong style="color:#1d1d1f;">資料飛輪(data flywheel)</strong> — 預測 vs 實際的回饋,讓系統越用越準。</p>
+
+            <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.04em; color: {{ accent }}; margin: 22px 0 10px;">跨系統整合的概念</p>
+            <p style="font-size: 16px; line-height: 1.75; color: #515154; margin-bottom: 4px;"><strong style="color:#1d1d1f;">Source of truth</strong> — 某個事實由哪個系統說了算。</p>
+            <p style="font-size: 16px; line-height: 1.75; color: #515154; margin-bottom: 4px;"><strong style="color:#1d1d1f;">Field-level ownership</strong> — 不同系統各自擁有不同欄位,避免雙向同步互相覆蓋。</p>
+            <p style="font-size: 16px; line-height: 1.75; color: #515154; margin-bottom: 4px;"><strong style="color:#1d1d1f;">Data contract</strong> — 跨系統交換資料的固定格式。</p>
+            <p style="font-size: 16px; line-height: 1.75; color: #515154; margin-bottom: 4px;"><strong style="color:#1d1d1f;">Multi-tenant / Adapter</strong> — 平台接不同客戶時,核心不寫死 if client=='x',用 adapter 隔開(core vs client 邊界)。</p>
+            <p style="font-size: 16px; line-height: 1.75; color: #515154; margin-bottom: 4px;"><strong style="color:#1d1d1f;">Idempotency / Correlation ID</strong> — 同一筆同步重送不重複;兩邊各記對方 id。</p>
+            <p style="font-size: 16px; line-height: 1.75; color: #515154; margin-bottom: 4px;"><strong style="color:#1d1d1f;">Proposal buffer</strong> — AI 產出先進緩衝區,人採納才變正式資料。</p>
+            <p style="font-size: 16px; line-height: 1.75; color: #515154; margin-bottom: 4px;"><strong style="color:#1d1d1f;">Vertical AI</strong> — 綁定一個產業 + 自有營運資料,是最難被抄的護城河。</p>
+
+            <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.04em; color: {{ accent }}; margin: 22px 0 10px;">技術棧 / 工具</p>
+            <p style="font-size: 16px; line-height: 1.75; color: #515154;">Gemini API(生成主力)、Cloud SQL / PostgreSQL(資料)、n8n(流程自動化)、LangChain / LangGraph(agent 編排)、MCP / function calling(給 agent 裝手)。</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
     <!-- feature case study: AI Agent workbench (governance & verification) -->
     <article style="max-width: 760px; margin: 0 auto; padding: 72px 22px 40px;">
       <div style="display: flex; gap: 14px; align-items: center; margin-bottom: 18px;">
@@ -464,6 +541,42 @@ class Component extends DCLogic {
         { area: 'DevOps 與工具', items: 'Git · Docker · Linux · Nginx · CI/CD · Zeabur / Vercel' },
         { area: '資料與分析', items: 'SQL · Pandas · 報表自動化 · 資料視覺化' },
         { area: '領域知識', items: '運籌管理 · 流程優化 · 供應鏈 · 專案管理' },
+      ],
+      aiTiers: [
+        {
+          n: '01', name: '單次生成', tag: '我的主力',
+          borderStyle: '1px solid #ececef', accentColor: '#0071e3', tagColor: '#0071e3', tagBg: 'rgba(0,113,227,0.1)', learnBg: '#f5f5f7',
+          desc: '一個 prompt、一份結果 —— 我最主力、也做最多的一階。',
+          apps: [
+            { name: '反推 PM 五大文件', sys: '內部工具', prob: '從一個專案,展開成五份結構化 PM 文件。' },
+            { name: '會議記錄摘要', sys: 'Mars', prob: '逐字稿 → 可用摘要。' },
+            { name: '工時 AI 整理(9 節模板)', sys: 'Mars', prob: '把雜亂的工時輸入,正規化進固定 schema。' },
+            { name: '排班 Excel 自由文字解析', sys: 'Mars', prob: '用 LLM 解「傳統 parser 解不了的例外欄位」。' },
+            { name: 'AI 規劃專案與任務', sys: 'Mars', prob: '目標 → 任務拆解。' },
+            { name: '月排班 AI 助手', sys: 'Mars', prob: '對話式輔助排班。' },
+          ],
+          learn: '真正的難點不在「呼叫 API」,在把六種雜亂的真實業務輸入,全部收斂成系統吃得下的結構化資料 —— 而且每一個都要上得了 production。',
+        },
+        {
+          n: '02', name: 'Chain 串接', tag: '多步流程',
+          borderStyle: '1px solid #ececef', accentColor: '#0071e3', tagColor: '#0071e3', tagBg: 'rgba(0,113,227,0.1)', learnBg: '#f5f5f7',
+          desc: '多步驟,前一步的輸出餵下一步。',
+          apps: [
+            { name: '專案開發模式 / 闖關', sys: '內部工具', prob: '多階段流程,每一關輸出餵下一關,關卡卡人審核。' },
+            { name: 'AI 週報', sys: 'Mars', prob: '抓資料 → 彙整 → 生成 → 發送 的自動化 pipeline(跑在 n8n)。' },
+          ],
+          learn: '我不知不覺已經做過「人類把關的多階段 AI 流程(human-in-the-loop)」—— 這比一個聊天框難,也更接近真實產品該有的樣子。',
+        },
+        {
+          n: '03', name: '工具使用', tag: '誠實說:起步中',
+          borderStyle: '1px dashed #d2d2d7', accentColor: '#86868b', tagColor: '#86868b', tagBg: '#f0f0f2', learnBg: '#f5f5f7',
+          desc: '讓模型能「動手」查資料、呼叫外部動作 —— 這一階我還在起步。',
+          apps: [
+            { name: '內部知識優先層(RAG)', sys: '進行中', prob: '卡在 pg_trgm vs pgvector 的取捨。' },
+            { name: 'AI 週報的資料抓取', sys: '輕量 tool use', prob: 'n8n 節點撈真實資料再生成。' },
+          ],
+          learn: '我很清楚要爬上第三階缺什麼 —— 缺讓模型能「動手」的 API、能「看真實資料」的 RAG。我正在補這塊,而不是假裝自己已經做完 agent。',
+        },
       ],
       contrasts: [
         { common: '把需求和公司資料整包丟給 AI,拿到能跑的就上。', mine: '先設計資料治理:DB 是主庫、AI 只推理不當資料庫、送外部先去識別化、每一步留痕、人是最後一關。' },
