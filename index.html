@@ -269,6 +269,57 @@
           </svg>
         </div>
 
+        <!-- tier-2 chain pipeline -->
+        <div style="background: #fff; border: 1px solid #ececef; border-radius: 22px; padding: 32px 28px 24px; margin-top: 20px;">
+          <p style="font-size: 13px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: #86868b; margin-bottom: 4px;">放大第二階</p>
+          <h4 style="font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 24px;">Chain 不是連續呼叫,是「每一關的輸出餵下一關」—— 而關鍵節點由人放行</h4>
+          <svg viewBox="0 0 880 210" width="100%" role="img" aria-label="Chain 串接示意:抓資料、彙整、生成三步依序執行,前一步輸出是下一步輸入;送出之前卡一道人審核關卡,人放行才發送。" style="display: block; max-width: 100%; height: auto;">
+            <g font-family="-apple-system, BlinkMacSystemFont, 'Noto Sans TC', sans-serif">
+              <rect x="14" y="62" width="150" height="58" rx="14" fill="#f5f5f7"/>
+              <text x="89" y="97" font-size="16" font-weight="600" fill="#1d1d1f" text-anchor="middle">抓資料</text>
+              <path d="M164 91 L196 91" stroke="#b7c2cd" stroke-width="2.2" fill="none"/><path d="M194 85 L206 91 L194 97 Z" fill="#b7c2cd"/>
+              <rect x="206" y="62" width="150" height="58" rx="14" fill="#f5f5f7"/>
+              <text x="281" y="97" font-size="16" font-weight="600" fill="#1d1d1f" text-anchor="middle">彙整</text>
+              <path d="M356 91 L388 91" stroke="#b7c2cd" stroke-width="2.2" fill="none"/><path d="M386 85 L398 91 L386 97 Z" fill="#b7c2cd"/>
+              <rect x="398" y="62" width="150" height="58" rx="14" fill="#f5f5f7"/>
+              <text x="473" y="97" font-size="16" font-weight="600" fill="#1d1d1f" text-anchor="middle">生成</text>
+              <path d="M548 91 L580 91" stroke="#b7c2cd" stroke-width="2.2" fill="none"/><path d="M578 85 L590 91 L578 97 Z" fill="#b7c2cd"/>
+              <rect x="590" y="62" width="140" height="58" rx="14" fill="#0071e3"/>
+              <text x="660" y="89" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">人審核</text>
+              <text x="660" y="108" font-size="11.5" fill="#cfe3fb" text-anchor="middle">卡關 · 等人放行</text>
+              <text x="660" y="44" font-size="13.5" font-weight="600" fill="#0071e3" text-anchor="middle">human-in-the-loop</text>
+              <path d="M730 91 L762 91" stroke="#0071e3" stroke-width="2.4" fill="none"/><path d="M760 85 L772 91 L760 97 Z" fill="#0071e3"/>
+              <rect x="772" y="62" width="94" height="58" rx="14" fill="#e7f5ee" stroke="#1d9e5b" stroke-width="1.6"/>
+              <text x="819" y="97" font-size="15.5" font-weight="700" fill="#127a44" text-anchor="middle">發送</text>
+              <text x="440" y="172" font-size="13.5" fill="#a1a1a6" text-anchor="middle">AI 週報就是這條 pipeline;專案開發模式則是每一關都卡人審核的多關版本</text>
+            </g>
+          </svg>
+        </div>
+
+        <!-- tier-3 missing pieces -->
+        <div style="background: #fff; border: 1px solid #ececef; border-radius: 22px; padding: 32px 28px 24px; margin-top: 20px;">
+          <p style="font-size: 13px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: #86868b; margin-bottom: 4px;">放大第三階</p>
+          <h4 style="font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 24px;">我很清楚缺哪兩塊:讓模型「動手」的 API、讓模型「看」的 RAG</h4>
+          <svg viewBox="0 0 880 250" width="100%" role="img" aria-label="第三階缺口示意:中間是已具備的模型推理核心;左邊虛線是正在補的「手」——能動手的 API,可查資料、建任務;右邊虛線是正在補的「眼」——RAG 檢索真實營運資料。手和眼補上,模型才能從回答問題走到自己動手。" style="display: block; max-width: 100%; height: auto;">
+            <g font-family="-apple-system, BlinkMacSystemFont, 'Noto Sans TC', sans-serif">
+              <path d="M262 122 L338 122" stroke="#b7c2cd" stroke-width="2" stroke-dasharray="6 6" fill="none"/>
+              <path d="M542 122 L618 122" stroke="#b7c2cd" stroke-width="2" stroke-dasharray="6 6" fill="none"/>
+              <rect x="340" y="86" width="200" height="72" rx="16" fill="#1d1d1f"/>
+              <text x="440" y="117" font-size="18" font-weight="700" fill="#ffffff" text-anchor="middle">模型</text>
+              <text x="440" y="140" font-size="12.5" fill="#a1a1a6" text-anchor="middle">推理核心 · 已就位 ✓</text>
+              <text x="151" y="66" font-size="13.5" font-weight="600" fill="#0071e3" text-anchor="middle">正在補</text>
+              <rect x="42" y="80" width="220" height="84" rx="16" fill="#fbfbfd" stroke="#b7c2cd" stroke-width="2" stroke-dasharray="7 6"/>
+              <text x="152" y="112" font-size="16.5" font-weight="700" fill="#1d1d1f" text-anchor="middle">能「動手」的 API</text>
+              <text x="152" y="138" font-size="13" fill="#86868b" text-anchor="middle">查資料 · 建任務 · function calling</text>
+              <text x="729" y="66" font-size="13.5" font-weight="600" fill="#0071e3" text-anchor="middle">正在補</text>
+              <rect x="620" y="80" width="220" height="84" rx="16" fill="#fbfbfd" stroke="#b7c2cd" stroke-width="2" stroke-dasharray="7 6"/>
+              <text x="730" y="112" font-size="16.5" font-weight="700" fill="#1d1d1f" text-anchor="middle">能「看」的 RAG</text>
+              <text x="730" y="138" font-size="13" fill="#86868b" text-anchor="middle">檢索真實營運資料 · 降低幻覺</text>
+              <text x="440" y="212" font-size="13.5" fill="#a1a1a6" text-anchor="middle">手和眼都補上,模型才能從「回答問題」走到「自己動手」—— 我在補,不是假裝做完了</text>
+            </g>
+          </svg>
+        </div>
+
         <!-- self-positioning -->
         <div style="margin-top: 40px; background: #000; color: #f5f5f7; border-radius: 24px; padding: 52px 40px; text-align: center;">
           <p style="font-size: 14px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #86868b; margin-bottom: 20px;">我目前的定位</p>
@@ -442,6 +493,37 @@
 
         <h2 style="font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 44px 0 18px; line-height: 1.25;">我試的做法</h2>
         <p style="font-size: 19px; line-height: 1.75; color: #1d1d1f; margin-bottom: 22px;">我把整個流程反過來。原本是「人先分類、再填」,改成:上傳一份 Markdown 進度 → AI 自動判斷它屬於哪個任務、整理成一條條進度、再對上該任務的驗收標準 → 最後由本人確認、主管採納,系統才真的寫進去。人從「動手做分類」變成「審一份已經整理好的草稿」。</p>
+
+        <!-- report-flow diagram with confidence branch -->
+        <div style="background: #fff; border: 1px solid #ececef; border-radius: 22px; padding: 30px 26px 20px; margin: 30px 0 26px;">
+          <svg viewBox="0 0 880 320" width="100%" role="img" aria-label="回報流程示意:上傳一份 Markdown 後,AI 在白名單內分類對齊並套信心門檻。信心夠,產生草稿送人確認;信心不足,標成待歸屬交回人決定,不硬塞。人確認、主管採納之後,才寫入工時與驗收。" style="display: block; max-width: 100%; height: auto;">
+            <g font-family="-apple-system, BlinkMacSystemFont, 'Noto Sans TC', sans-serif">
+              <rect x="16" y="70" width="160" height="64" rx="14" fill="#f5f5f7"/>
+              <text x="96" y="99" font-size="16" font-weight="600" fill="#1d1d1f" text-anchor="middle">上傳一份 MD</text>
+              <text x="96" y="120" font-size="12" fill="#86868b" text-anchor="middle">一天的進度全在裡面</text>
+              <path d="M176 102 L214 102" stroke="#b7c2cd" stroke-width="2.2" fill="none"/><path d="M212 96 L224 102 L212 108 Z" fill="#b7c2cd"/>
+              <rect x="224" y="70" width="190" height="64" rx="14" fill="#deecfc"/>
+              <text x="319" y="99" font-size="16" font-weight="700" fill="#0b3a66" text-anchor="middle">AI 分類對齊</text>
+              <text x="319" y="120" font-size="12" fill="#54657a" text-anchor="middle">白名單內 · 過信心門檻</text>
+              <text x="435" y="88" font-size="13" font-weight="600" fill="#1d9e5b" text-anchor="middle">信心夠</text>
+              <path d="M414 102 L462 102" stroke="#b7c2cd" stroke-width="2.2" fill="none"/><path d="M460 96 L472 102 L460 108 Z" fill="#b7c2cd"/>
+              <rect x="472" y="70" width="180" height="64" rx="14" fill="#0071e3"/>
+              <text x="562" y="99" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">本人確認 · 主管採納</text>
+              <text x="562" y="120" font-size="11.5" fill="#cfe3fb" text-anchor="middle">AI 只能提議 · 人拍板</text>
+              <path d="M652 102 L690 102" stroke="#0071e3" stroke-width="2.4" fill="none"/><path d="M688 96 L700 102 L688 108 Z" fill="#0071e3"/>
+              <rect x="700" y="70" width="164" height="64" rx="14" fill="#e7f5ee" stroke="#1d9e5b" stroke-width="1.6"/>
+              <text x="782" y="99" font-size="15.5" font-weight="700" fill="#127a44" text-anchor="middle">寫入工時與驗收</text>
+              <text x="782" y="120" font-size="11.5" fill="#3a7d5a" text-anchor="middle">一任務一筆 ✓</text>
+              <path d="M319 134 L319 196" stroke="#b7c2cd" stroke-width="2" stroke-dasharray="6 6" fill="none"/><path d="M313 194 L319 206 L325 194 Z" fill="#b7c2cd"/>
+              <text x="352" y="172" font-size="13" font-weight="600" fill="#86868b">信心不足</text>
+              <rect x="204" y="206" width="230" height="58" rx="14" fill="#fbfbfd" stroke="#b7c2cd" stroke-width="1.8" stroke-dasharray="7 6"/>
+              <text x="319" y="231" font-size="15" font-weight="600" fill="#1d1d1f" text-anchor="middle">標「待歸屬」</text>
+              <text x="319" y="251" font-size="12" fill="#86868b" text-anchor="middle">交回人決定 · 不硬塞</text>
+              <path d="M434 235 L562 235 L562 142" stroke="#b7c2cd" stroke-width="2" stroke-dasharray="6 6" fill="none"/><path d="M556 144 L562 132 L568 144 Z" fill="#b7c2cd"/>
+              <text x="440" y="300" font-size="13.5" fill="#a1a1a6" text-anchor="middle">兩條路最後都經過人 —— 差別只在 AI 有多少把握</text>
+            </g>
+          </svg>
+        </div>
 
         <h2 style="font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 44px 0 18px; line-height: 1.25;">幾個關鍵決定</h2>
         <p style="font-size: 19px; line-height: 1.75; color: #1d1d1f; margin-bottom: 14px;"><strong>人是最後一關。</strong>AI 只負責「提議」,在有人按下確認之前,什麼都不會寫進真正的任務資料。這道人工關卡是設計,不是補丁。</p>
