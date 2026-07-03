@@ -145,9 +145,71 @@
     <section style="padding: 96px 22px 20px; background: #fff;">
       <div style="max-width: 820px; margin: 0 auto; text-align: center;">
         <h2 style="font-size: 56px; font-weight: 700; letter-spacing: -0.025em; margin-bottom: 16px;">AI 功能開發與應用</h2>
-        <p style="font-size: 21px; line-height: 1.6; color: #6e6e73; max-width: 680px; margin: 0 auto;">我把 AI 導入真實工作流程的幾個嘗試。重點不是「AI 多厲害」,而是我發現了什麼問題、試著導入什麼、又學到了什麼。</p>
+        <p style="font-size: 21px; line-height: 1.6; color: #6e6e73; max-width: 680px; margin: 0 auto;">我把 AI 導入真實工作流程的幾個嘗試。重點不是「AI 多厲害」,而是我發現了什麼問題、試著導入什麼、又學到了什麼 —— 也想說清楚,我用 AI 開發的方式,跟一般人差在哪。</p>
       </div>
     </section>
+
+    <!-- differentiation comparison -->
+    <section style="padding: 44px 22px 24px; background: #fff;">
+      <div style="max-width: 960px; margin: 0 auto;">
+        <p style="font-size: 14px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #86868b; text-align: center; margin-bottom: 16px;">我跟一般人用 AI 開發的差別</p>
+        <h3 style="font-size: 34px; font-weight: 700; letter-spacing: -0.02em; text-align: center; line-height: 1.2; margin-bottom: 44px; max-width: 640px; margin-left: auto; margin-right: auto;">關鍵不在「會不會 prompt」,在有沒有替 AI 畫好邊界</h3>
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <sc-for list="{{ contrasts }}" as="c" hint-placeholder-count="5">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div style="background: #f5f5f7; border-radius: 16px; padding: 22px 24px;">
+              <div style="font-size: 13px; font-weight: 600; color: #86868b; margin-bottom: 8px;">一般做法</div>
+              <p style="font-size: 16px; line-height: 1.6; color: #6e6e73;">{{ c.common }}</p>
+            </div>
+            <div style="background: rgba(0,113,227,0.06); border: 1px solid rgba(0,113,227,0.14); border-radius: 16px; padding: 22px 24px;">
+              <div style="font-size: 13px; font-weight: 600; color: {{ accent }}; margin-bottom: 8px;">我的做法</div>
+              <p style="font-size: 16px; line-height: 1.65; color: #1d1d1f;">{{ c.mine }}</p>
+            </div>
+          </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- feature case study: AI Agent workbench (governance & verification) -->
+    <article style="max-width: 760px; margin: 0 auto; padding: 72px 22px 40px;">
+      <div style="display: flex; gap: 14px; align-items: center; margin-bottom: 18px;">
+        <span style="font-size: 13px; font-weight: 600; color: {{ accent }}; background: rgba(0,113,227,0.08); padding: 5px 12px; border-radius: 980px;">內部工具 · AI 治理</span>
+        <span style="font-size: 14px; color: #86868b;">AI Agent · 資料治理 · 2026</span>
+      </div>
+      <h1 style="font-size: 46px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 20px;">一套把 AI 關進治理框架的 Agent 工作台</h1>
+      <p style="font-size: 22px; line-height: 1.55; color: #515154; font-weight: 400;">上傳一個專案的零散素材,讓 AI 反推出成套的 PM 文件。但我真正花心思的,不是「叫 AI 生成」,而是怎麼讓 AI 在一條受控、能被稽核的資料流裡工作。</p>
+    </article>
+
+    <div style="max-width: 760px; margin: 0 auto; padding: 0 22px 40px;">
+      <div style="border-top: 1px solid #ececef; padding-top: 44px;">
+        <h2 style="font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 18px; line-height: 1.25;">這是什麼</h2>
+        <p style="font-size: 19px; line-height: 1.75; color: #1d1d1f; margin-bottom: 22px;">團隊在跑專案時,那幾份 PM 文件 —— 需求確認、企劃書、執行細則、流程與分派、技術規格 —— 常常是散的,或是事後才補。我做了一套內部的 AI Agent 工作台:把一個專案的零散素材(會議記錄、進度回報、既有文件)丟進去,讓 AI 反推、整理成這五份結構化的文件。聽起來就是「叫 AI 生成」,但難的、也是我最在意的,不在生成本身。</p>
+
+        <h2 style="font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 44px 0 18px; line-height: 1.25;">一般人會怎麼做 —— 以及我為什麼不那樣做</h2>
+        <p style="font-size: 19px; line-height: 1.75; color: #1d1d1f; margin-bottom: 22px;">最快的路,是把公司的專案資料整包丟給一個雲端 AI,叫它產文件,拿到能用的就好。但這裡有兩件我不能接受的事:第一,公司內部資料就這樣流出去了;第二,我沒辦法回答「這份文件到底是根據什麼生出來的、可不可信」。所以我沒有把它做成一個「呼叫 AI 的按鈕」,而是重新設計成一條有治理的資料流。</p>
+
+        <h2 style="font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 44px 0 18px; line-height: 1.25;">讓 AI 只推理,不當資料庫</h2>
+        <p style="font-size: 19px; line-height: 1.75; color: #1d1d1f; margin-bottom: 22px;">我定了第一條線:系統自己的資料庫才是主要知識來源,AI 只負責整理與生成,不負責保管公司資料,也不是拿它的資料庫來查。Agent 動作前先查自家資料,而不是「把公司資料丟出去讓外部模型幫我查」。AI 在我的架構裡,是一個受信任、但被框住的處理器,不是知識的擁有者。</p>
+
+        <h2 style="font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 44px 0 18px; line-height: 1.25;">要送出去,先去識別化、而且留痕</h2>
+        <p style="font-size: 19px; line-height: 1.75; color: #1d1d1f; margin-bottom: 22px;">當內部資料不足、真的需要對外查東西時,只能送出「去識別化後的查詢條件」—— 內部原文、客戶、成本、人員資料一律不出門。而且整條路都要留紀錄:查詢的目的、有沒有去識別化、誰核准、外部結果怎麼標來源與可信度、最後回存到哪。這不是為了好看,是為了哪天有人問起,我能把每一步交代清楚。</p>
+
+        <h2 style="font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 44px 0 18px; line-height: 1.25;">人是最後一關,AI 只能「提議」</h2>
+        <p style="font-size: 19px; line-height: 1.75; color: #1d1d1f; margin-bottom: 22px;">AI 生出來的每一份文件,都會被標上「未經人工確認」,並自動附一段「待確認事項」。在有人真的看過、按下確認之前,它就是一份草稿,不會被系統當成定案。這道人工關卡是設計,不是補丁 —— 我要的自動化,是清楚知道哪裡該把人請回來。</p>
+
+        <h2 style="font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 44px 0 18px; line-height: 1.25;">我最在意的一件事:讓 AI 誠實</h2>
+        <p style="font-size: 19px; line-height: 1.75; color: #1d1d1f; margin-bottom: 22px;">這是我覺得跟「一般用法」差最多的地方。我不要一個總是給你漂亮答案的 AI,我要一個會承認自己不確定的 AI。實際跑的時候,它抓到了素材裡兩份文件互相矛盾的地方,還精確指出是哪一份;也標出某個來源檔讀起來像亂碼、建議去要原檔,而不是硬掰一段看似合理的內容。會抓矛盾、會說「這裡我不確定」,比生得又快又漂亮重要太多。</p>
+
+        <h2 style="font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 44px 0 18px; line-height: 1.25;">「AI 說做完」,我一律再驗一次</h2>
+        <p style="font-size: 19px; line-height: 1.75; color: #1d1d1f; margin-bottom: 22px;">我對 AI 寫出來的程式,也用同一種懷疑。開發這套系統時,有三個真的會出事的 bug,單元測試全都沒抓到 —— 是靠把服務真的叫起來、用真實請求跑一遍,再加上一輪專門「找碴」的對抗式 review 才揪出來的:一個上傳檔名沒處理好的安全風險、一個長文件生成會整個逾時退回的問題、一個檔案大小上限根本沒生效的設定。每一個都是「看起來會動」但實際會爆。沒有親眼驗過,我不會說它做好了。</p>
+
+        <blockquote style="font-size: 24px; font-weight: 500; line-height: 1.45; letter-spacing: -0.015em; color: #1d1d1f; border-left: 4px solid {{ accent }}; padding: 6px 0 6px 26px; margin: 40px 0;">把公司資料丟給 AI 很快,但我更在意的是:這條資料流,我能不能為它負責。</blockquote>
+
+        <h2 style="font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 44px 0 18px; line-height: 1.25;">我學到的</h2>
+        <p style="font-size: 19px; line-height: 1.75; color: #1d1d1f; margin-bottom: 22px;">用 AI 開發,真正的分水嶺不在「你多會 prompt」,而在你有沒有替 AI 畫好邊界:哪些資料能碰、哪些判斷不能交出去、產出要怎麼被驗證。工具越強,這條邊界越重要。這套系統教我的,是把 AI 當成一個需要被治理、被驗證的合作者,而不是一個可以無條件相信的黑盒。</p>
+      </div>
+    </div>
 
     <!-- feature case study: 進度回報 × AI 整合驗收分析 -->
     <article style="max-width: 760px; margin: 0 auto; padding: 56px 22px 40px;">
@@ -335,8 +397,16 @@ class Component extends DCLogic {
         { area: '資料與分析', items: 'SQL · Pandas · 報表自動化 · 資料視覺化' },
         { area: '領域知識', items: '運籌管理 · 流程優化 · 供應鏈 · 專案管理' },
       ],
+      contrasts: [
+        { common: '把需求和公司資料整包丟給 AI,拿到能跑的就上。', mine: '先設計資料治理:DB 是主庫、AI 只推理不當資料庫、送外部先去識別化、每一步留痕、人是最後一關。' },
+        { common: '相信「AI 說做完就是做完」。', mine: '驗證先於宣稱 —— 自己跑、看實際改了什麼、用真實請求驗;再加一輪專門找碴的 review,抓出單元測試抓不到的真 bug。' },
+        { common: 'Prompt 完直接開始寫。', mine: '先跟現實對齊 —— 查清楚資料真正的結構與限制,寫成規格與計畫,再動手。' },
+        { common: '開一個對話,從頭聊到尾。', mine: '把 AI 當團隊編排 —— 多個 agent 並行,有的寫、有的 review、有的 debug,最後我終審。' },
+        { common: '要 AI 給一個漂亮的答案。', mine: '要 AI 誠實 —— 產出標「未經人工確認」、列出待確認事項,會主動指出矛盾與資料風險,而不是硬掰。' },
+      ],
       projects: [
         { name: 'Mars 專案管理系統', tag: '畢業專題 · 全端', desc: '整合任務看板、甘特圖與自動化通知的全端專案管理平台。最新加入「進度回報 × AI 驗收分析」:上傳一份進度,就自動對齊到任務與驗收標準。後端以 FastAPI 打造,並用 Agent 自動分派與摘要任務。', meta: '2024 — 至今', cta: '到 Mars 分頁看細節 ›', onOpen: () => this.pick('mars') },
+        { name: 'AI Agent 工作台(內部工具)', tag: '內部工具 · AI 治理', desc: '把專案零散素材反推成成套 PM 文件的 Agent 工作台。重點不在「叫 AI 生成」,而在讓 AI 在一條受控、可稽核的資料流裡工作:DB 是主庫、AI 只推理、送外部先去識別化、產出一律經人工確認。', meta: '工作專案 · 2026', cta: '看我怎麼開發它 ›', onOpen: () => this.pick('features') },
         { name: 'Convate 分身擂台', tag: 'AI 對戰 · 全端', desc: '針對熱門議題與 AI 分身正面交鋒的辯論練習平台。挑一個發燒議題發起對戰,在來回攻防裡練習表達、論證與換位思考。後端處理議題管理與對戰流程,前端走乾淨俐落的 flat 設計。', meta: '個人專案 · 2026', cta: '', onOpen: () => {} },
       ],
       posts: [
